@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN" "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+    <package name="publicAccess" extends="abstract_struts" namespace="/">
+        <!-- 新生 -->			
+		<action name="StdProfileEdit" class="action.StdProfileEditAction">
+			<result>jsp/StdProfileEdit.jsp</result>
+		</action>	
+		<!-- 課程 -->
+		<action name="PubCsSearch" class="action.PubCsSearchAction">
+			<result>jsp/PubCsSearch.jsp</result>
+		</action>	
+		<!-- 時程 -->
+		<action name="PubTimeSearch" class="action.PubTimeSearchAction">
+			<result>jsp/PubTimeSearch.jsp</result>
+		</action>
+		
+		<!-- 家長 -->
+		<action name="Parent" class="action.ParentAction">
+			<result>jsp/Parent.jsp</result>
+		</action>
+		
+		<!-- 系統文件 -->
+		<action name="SysDoc" class="action.SysDocAction">
+			<result>jsp/SysDoc.jsp</result>
+		</action>
+		
+		<!-- 地圖文件 -->
+		<action name="SimpleMap" class="action.SimpleMapAction">
+			<result>jsp/SimpleMap.jsp</result>
+		</action>
+	</package>
+	
+    
+
+</struts>

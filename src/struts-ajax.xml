@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN" "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	
+	<package name="ajax" extends="struts-default, json-default" namespace="/">
+		
+		<!-- 家長代表提示 -->
+		<action name="parentSuggestion" class="ajax.parentSuggestion">
+			<result type="json"/>
+		</action>
+		
+		
+		<!-- 家長代表手機登入 -->
+		<action name="parentLoginApp" class="ajax.parentLoginApp">
+			<result type="json"/>
+		</action>
+	</package>
+	
+	
+	<package name="ajax.stdApp" extends="struts-default, json-default" namespace="/">
+		
+		<!-- 學生手機登入 -->
+		<action name="stdAppLogin" class="ajax.stdApp.stdAppLogin">
+			<result type="json"/>
+		</action>
+		
+	</package>
+	
+	<package name="ajax.empApp" extends="struts-default, json-default" namespace="/">
+		
+		<!-- 教職員手機登入 -->
+		<action name="empAppLogin" class="ajax.empApp.empAppLogin">
+			<result type="json"/>
+		</action>
+		
+		<!-- 取行事曆 -->
+		<action name="getCalendarApp" class="ajax.empApp.getCalendarApp">
+			<result type="json"/>
+		</action>
+		
+		<!-- 取差勤 -->
+		<action name="getWorkdateApp" class="ajax.empApp.getWorkdateApp">
+			<result type="json"/>
+		</action>
+		
+		<!-- 取課表 -->
+		<action name="getTimetableApp" class="ajax.empApp.getTimetableApp">
+			<result type="json"/>
+		</action>
+		
+		<!-- 取點名班級 -->
+		<action name="getRollCallClass" class="ajax.empApp.getRollCallClass">
+			<result type="json"/>
+		</action>
+		
+		<!-- 取點名學生 -->
+		<action name="getRollCallStds" class="ajax.empApp.getRollCallStds">
+			<result type="json"/>
+		</action>
+		
+		<!-- 取學生假單 -->
+		<action name="getDocApp" class="ajax.empApp.getDocApp">
+			<result type="json"/>
+		</action>
+		
+		<!-- 核學生假單 -->
+		<action name="senDocApp" class="ajax.empApp.senDocApp">
+			<result type="json"/>
+		</action>
+		
+		<!-- 取班級列表 -->
+		<action name="getCntClass" class="ajax.empApp.getCntClass">
+			<result type="json"/>
+		</action>
+		
+		<!-- 取學生列表 -->
+		<action name="getCntStds" class="ajax.empApp.getCntStds">
+			<result type="json"/>
+		</action>
+		
+		<!-- 取登入歷程 -->
+		<action name="getLogAccess" class="ajax.pub.getLogAccess">
+			<result type="json"/>
+		</action>
+		
+		<!-- 取班級動態 -->
+		<action name="getClsEvent" class="ajax.empApp.getClsEvent">
+			<result type="json">
+			    <param name="list">list</param>
+			    <param name="callbackParameter">back</param>
+		   	</result>
+		</action>
+		
+	</package>
+	
+
+</struts>
