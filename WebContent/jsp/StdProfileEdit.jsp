@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -132,7 +133,7 @@ function ImgError(source){
 		        <input id="myFile" type="file" 
 		        onClick=" $('#progress .bar').css('width','0%'),$('#files').html('');" name="myFile" multiple>
 		    </span>
-		    <br /><span>請上傳正式大頭照 (製作學生證使用)</span>
+		    <br /><span>請上傳正式2吋或3吋證件照片 (製作學生證使用)</span>
 		</td>		
 		<td width="100%"></td>
 	</tr>
@@ -174,35 +175,44 @@ $(function(){
 		<td class="text-info" nowrap><b class="text-warning">*</b>星號必填欄位</td>
 		<td class="text-info" width="100%"></td>
 	</tr>
-	<tr>
-		<td class="text-info" nowrap>英文姓名</td>
-		<td><input type="text" autocomplete="off" name="student_ename" value="${std.student_ename}" class="span2"/></td>
-		<td class="text-info" width="100%"></td>
-	</tr>
-	<tr>
-		<td class="text-info" nowrap>國籍</td>
-		<td><input type="text" autocomplete="off" name="BirthCountry" value="${std.BirthCountry}" class="span2"/></td>
-		<td class="text-info" width="100%"></td>
-	</tr>
+	
+	
 	<tr>
 		<td class="text-info" nowrap><b class="text-warning">*</b>性別</td>
 		<td class="text-info">
-		<select name="sex">
-			<option value="">請選擇</option>
+		<select name="sex" disabled>
 			<option <c:if test="${std.sex eq '1'}">selected</c:if> value="1">男</option>
 			<option <c:if test="${std.sex eq '2'}">selected</c:if> value="2">女</option>
 		</select>
 		<td class="text-info" width="100%"></td>
 	</tr>
 	<tr>
-		<td class="text-info" nowrap><b class="text-warning">*</b>出生地 (縣市)</td>
+		<td class="text-info" nowrap><b class="text-warning"></b>出生地 (縣市)</td>
 		<td class="text-info">
 		<select name="birth_county">
-			<option value="">無</option>
+			<option value=""></option>
 			<c:forEach items="${birth_county}" var="d">
 				<option <c:if test="${std.birth_county eq d.no}">selected</c:if> value="${d.no}">${d.name}</option>
 			</c:forEach>
 		</select>
+	</tr>
+	<tr>
+		<td class="text-info" nowrap>國籍</td>
+		<td nowrap>
+		<input type="text" autocomplete="off" name="BirthCountry" value="${std.BirthCountry}" class="span2"/>		
+		<select name="ident_remark">
+			<option value="">非新住民身份</option>
+			<option <c:if test="${fn:indexOf(std.ident_remark, '新住民')>-1}">selected</c:if> value="新住民">具新住民身份</option>
+		</select>
+		
+		<input type="text" autocomplete="off" placeholder="英文姓名" name="student_ename" value="${std.student_ename}" class="span2"/>
+		</td>
+		<td class="text-info" width="100%"></td>
+	</tr>
+	<tr>
+		<td class="text-info" nowrap>僑生僑居地</td>
+		<td><input type="text" autocomplete="off" name="ForeignPlace" value="${std.ForeignPlace}" class="span2"/></td>
+		<td class="text-info" width="100%"></td>
 	</tr>
 	<tr>
 		<td class="text-info" nowrap>原住民族籍</td>
@@ -216,11 +226,7 @@ $(function(){
 		<td class="text-info" width="100%"></td>
 		</td>
 	</tr>
-	<tr>
-		<td class="text-info" nowrap>僑生僑居地</td>
-		<td><input type="text" autocomplete="off" name="ForeignPlace" value="${std.ForeignPlace}" class="span2"/></td>
-		<td class="text-info" width="100%"></td>
-	</tr>
+	
 	<tr>
 		<td class="text-info" nowrap>入學前之學歷學校名稱</td>
 		<td><input type="text" autocomplete="off" name="schl_name" value="${std.schl_name}" class="span3"/></td>
@@ -312,7 +318,7 @@ $(function(){
 	<tr>
 		<td>
 		<button class="btn btn-danger" name="method:save" type="submit" onClick="$.blockUI({message:null});">儲存輸入資料</button>
-		<a href="StdProfileEdit" class="btn">取消</a>
+		<a href="StdProfileEdit" class="btn">離開</a>
 		</td>
 	</tr>
 </table>
