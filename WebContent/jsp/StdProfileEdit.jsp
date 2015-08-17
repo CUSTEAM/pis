@@ -180,7 +180,7 @@ $(function(){
 	<tr>
 		<td class="text-info" nowrap><b class="text-warning">*</b>性別</td>
 		<td class="text-info">
-		<select name="sex" disabled>
+		<select name="sex">
 			<option <c:if test="${std.sex eq '1'}">selected</c:if> value="1">男</option>
 			<option <c:if test="${std.sex eq '2'}">selected</c:if> value="2">女</option>
 		</select>
