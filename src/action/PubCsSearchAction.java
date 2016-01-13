@@ -28,7 +28,7 @@ public class PubCsSearchAction extends BaseAction{
 			if(place.trim().equals("")){
 				request.setAttribute("dtimes", getDtimes());
 			}else{
-				request.setAttribute("dtimes", getDtimeClass());//教室課表
+				request.setAttribute("dtimes", getDtimeClass(school_year));//教室課表
 			}
 			
 		}else{
@@ -39,9 +39,9 @@ public class PubCsSearchAction extends BaseAction{
 		return SUCCESS;
 	}
 	
-	private List getDtimeClass(){
+	private List getDtimeClass(String school_year){
 		try{
-			return sortOut(df.sqlGet("SELECT e.Oid as emplOid, 103 as school_year, cdo.name as optName, (SELECT COUNT(*)FROM stmd, Seld WHERE "
+			return sortOut(df.sqlGet("SELECT e.Oid as emplOid, '"+school_year+"' as school_year, cdo.name as optName, (SELECT COUNT(*)FROM stmd, Seld WHERE "
 					+ "stmd.student_no=Seld.student_no AND Seld.Dtime_oid=d.Oid AND stmd.sex='1') as bsed, (SELECT COUNT(*)FROM "
 					+ "stmd, Seld WHERE stmd.student_no=Seld.student_no AND Seld.Dtime_oid=d.Oid AND stmd.sex='2') as gsed,cl.ClassName,"
 					+ "e.cname, c.chi_name, d.Oid, d.credit, d.opt, d.open, d.thour, d.elearning, d.stu_select,"

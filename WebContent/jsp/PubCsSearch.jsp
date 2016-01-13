@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 
-<title>Insert title here</title>
+<title>課程查詢</title>
 <script src="/eis/inc/js/plugin/bootstrap-typeahead.js"></script>
 <script src="/eis/inc/js/plugin/json2.js"></script>
 <script src="/eis/inc/js/plugin/jquery-ui.js"></script>
