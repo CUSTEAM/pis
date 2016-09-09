@@ -142,7 +142,7 @@ $(document).ready(function() {
 			<span class="add-on">第</span>
             <select name="begin" id="begin" onChange="$('#end').val(this.value)">
 				<option value=""></option>
-				<c:forEach begin="1" end="14" varStatus="d">
+				<c:forEach begin="1" end="16" varStatus="d">
 				<option <c:if test="${begin == d.index}">selected</c:if> value="${d.index}">${d.index}</option>
 				</c:forEach>
 			</select>
@@ -153,7 +153,7 @@ $(document).ready(function() {
 			<span class="add-on">至</span>
             <select name="end" id="end" class="selectpicker" data-style="btn-danger">
 				<option value=""></option>
-				<c:forEach begin="1" end="14" varStatus="d">
+				<c:forEach begin="1" end="16" varStatus="d">
 				<option <c:if test="${end == d.index}">selected</c:if> value="${d.index}">${d.index}</option>
 				</c:forEach>
 			</select>

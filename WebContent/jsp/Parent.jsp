@@ -66,7 +66,7 @@ $(document).ready(function() {
 		</tr>
 		<c:set var="beginClass" value="1"/>
 		<c:if test="${allClass[0].begin>=10}"><c:set var="beginClass" value="11"/></c:if>
-		<c:forEach begin="${beginClass}" end="14" var="c">
+		<c:forEach begin="${beginClass}" end="16" var="c">
 		<tr height="75">
 		<td class="hairLineTdF">${c}</td>		
 		<c:forEach begin="1" end="7" var="w">		

@@ -123,9 +123,11 @@ function ImgError(source){
 	<tr>
 		<td class="text-info" nowrap>
 			<div id="files">
-			<img class='img-polaroid' onerror="ImgError(this);" src='/eis/getStdimage?myStdNo=${myStdNo}&"+Math.floor(Math.random()*999)+"'>
+			<img class='img-polaroid' onerror="ImgError(this);" src='/eis/getStdimage?myStdNo=${myStdNo}&t="+Math.floor(Math.random()*999)+"'>
 			</div> 
-		</td>		
+		</td>	
+	</tr>
+	<tr>	
 		<td nowrap>
 			<span class="btn btn-success fileinput-button">
 		        <i class="icon-plus icon-white"></i>
@@ -133,9 +135,9 @@ function ImgError(source){
 		        <input id="myFile" type="file" 
 		        onClick=" $('#progress .bar').css('width','0%'),$('#files').html('');" name="myFile" multiple>
 		    </span>
-		    <br /><span>請上傳正式2吋或3吋證件照片 (製作學生證使用)</span>
+		    <span>請上傳正式2吋或3吋證件照片 (製作學生證使用)</span>
 		</td>		
-		<td width="100%"></td>
+		
 	</tr>
 </table>
 <script>
@@ -149,7 +151,7 @@ $(function(){
 	        done: function (e, data) {
 	            $.each(data.result.files, function (index, file) {//
 	                if(file.name!=null){
-	                	$("#files").html("<img class='img-polaroid' src='/eis/getStdimage?myStdNo=${myStdNo}&"+Math.floor(Math.random()*999)+"'>");
+	                	$("#files").html("<img class='img-polaroid' src='/eis/getStdimage?myStdNo=${myStdNo}&t="+Math.floor(Math.random()*999)+"'>");
 	                }else{
 	                	$("#files").html("必需是.jpg檔案");
 	                }	            		            
