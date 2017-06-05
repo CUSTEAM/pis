@@ -16,20 +16,9 @@
 <script src="/eis/inc/js/plugin/birthdayPicker/birthdayPicker.js" type="text/javascript"></script>
 <link href="/eis/inc/js/plugin/birthdayPicker/birthdayPicker.css" rel="stylesheet"/>
 <link href="/eis/inc/css/jquery-ui.css" rel="stylesheet"/>
-<link href="/eis/inc/css/wizard-step.css" rel="stylesheet"/>
 <script src="/eis/inc/js/autoComplete.js"></script>
 <script src="/eis/inc/js/develop/timeInfo.js"></script>
-<style>
-    body .modal {
-    /* new custom width */
-    width: 90%;
-    /* must be half of the width, minus scrollbar on the left (30px) */
-    margin-left: -45%;
-}
-.modal-body {
-    max-height: 650px;
-}
-</style>
+
 <script>
 $(document).ready(function() {	
 	$(".help").popover("show");
@@ -42,32 +31,30 @@ $(document).ready(function() {
 <body>
     
     
-<div class="alert">
+<div class="bs-callout bs-callout-warning" id="callout-helper-pull-navbar">
 <button type="button" class="close" data-dismiss="alert">&times;</button>
-<strong>課程查詢</strong> 輸入教師名稱查詢留校時間 <button rel="popover" title="說明" data-content="非本學期資料依各單位公佈或留存為準" data-placement="right" class="btn btn-warning help" type="button">!</button>
-</div>
-<form action="PubCsSearch" method="post"  class="form-horizontal control-group info">
-<div class="wizard-steps">
-  	<div><a href="#"><span>1</span> 指定學年學期</a></div>
-  	<div><a href="#"><span>2</span> 指定班級範圍</a></div>
-  	<div><a href="#"><span>3</span> 指定交叉比對條件</a></div>
-  	<div><a href="#"><span>3</span> 查詢</a></div>
+<strong>課程查詢</strong> 輸入教師名稱查詢留校時間, 非本學期資料依各單位公佈或留存為準
 </div>
 
+<form action="PubCsSearch" method="post"  class="form-inline">
+
+
+<div class="panel panel-primary">
+	<div class="panel-heading">查詢條件</div>
 <table class="table">
 	
 	<tr>
-		<td>
-		<div class="input-append">
-				<input type="text" placeholder="學年度" class="span1" name="year" id="year" onClick="this.value='';"
+		<td nowrap>
+		<div class="input-group">
+				<input type="text" style="width:70px;" placeholder="學年度" class="form-control" name="year" id="year" onClick="this.value='';"
 				<c:choose>
     			<c:when test="${year==school_year||empty year}">value="${school_year}"</c:when>
     			<c:when test="${year!=school_year}">value="${year}"</c:when>
     			</c:choose>
     			autocomplete="off" />
-				<span class="add-on">學年</span>
-			</div>
-		<select name="term" id="term">
+				<span class="input-group-addon">學年</span>
+		</div>
+		<select name="term" id="term" class="form-control">
 			<option <c:if test="${term eq'1'}">selected</c:if> value="1">上學期</option>
 			<option <c:if test="${term eq'2'}">selected</c:if> value="2">下學期</option>
 		</select>	
@@ -76,27 +63,27 @@ $(document).ready(function() {
 	</tr>
 	<tr>
 		<td>		
-			<div class="input-prepend">
-				<span class="add-on">授課教師</span>
-				<input type="text" placeholder="授課教師姓名" class="span3 techid" name="techid" id="techid" value="${techid}" onClick="this.value='';" autocomplete="off" data-provide="typeahead"/>
+			<div class="input-group">
+				<span class="input-group-addon">授課教師</span>
+				<input type="text" placeholder="授課教師姓名" class="form-control techid" name="techid" id="techid" value="${techid}" onClick="this.value='';" autocomplete="off" data-provide="typeahead"/>
 			</div>	
-			<div class="input-prepend">
-				<span class="add-on">科目名稱</span>
-				<input type="text" placeholder="課程名稱片段或課程代碼" class="span3 cscode" name="cscode" id="cscode" value="${cscode}" onClick="this.value='';" autocomplete="off" data-provide="typeahead"/>
+			<div class="input-group">
+				<span class="input-group-addon">科目名稱</span>
+				<input type="text" placeholder="課程名稱片段或課程代碼" class="form-control cscode" name="cscode" id="cscode" value="${cscode}" onClick="this.value='';" autocomplete="off" data-provide="typeahead"/>
 			</div>
 			<span class="tgroup">
-			<div class="input-prepend">
-				<span class="add-on">教室名稱</span>
-				<input type="text" placeholder="教室名稱或教室代碼" class="span2 place" name="place" id="place" value="${place}" onClick="this.value='';" autocomplete="off" data-provide="typeahead"/>
+			<div class="input-group">
+				<span class="input-group-addon">教室名稱</span>
+				<input type="text" placeholder="教室名稱或教室代碼" class="form-control place" name="place" id="place" value="${place}" onClick="this.value='';" autocomplete="off" data-provide="typeahead"/>
 			</div>
 			</span>
 		</td>
 	</tr>
 	<tr>
 		<td>
-		<div class="input-prepend">
-		<span class="add-on">選別</span>
-            <select name="opt">
+		<div class="input-group">
+			<span class="input-group-addon">選別</span>
+            <select name="opt" class="form-control">
 				<option value=""></option>
 				<option <c:if test="${opt eq'1'}">selected</c:if> value="1">必修</option>
 				<option <c:if test="${opt eq'2'}">selected</c:if> value="2">選修</option>
@@ -104,9 +91,9 @@ $(document).ready(function() {
 			</select>
         </div>
 		
-		<div class="input-prepend">
-		<span class="add-on">授課型態</span>
-            <select name="ele">
+		<div class="input-group">
+			<span class="input-group-addon">授課型態</span>
+            <select name="ele" class="form-control">
 				<option value=""></option>
 				<option <c:if test="${ele eq'0'}">selected</c:if> value="0">一般</option>
 				<option <c:if test="${ele eq'1'}">selected</c:if> value="1">遠距</option>
@@ -116,17 +103,17 @@ $(document).ready(function() {
         </div>
         
         <span class="tgroup">
-        <div class="input-prepend">
-		<span class="add-on">實習費</span>
-            <select name="pay">
+        <div class="input-group">
+			<span class="input-group-addon">實習費</span>
+            <select name="pay" class="form-control">
 				<option value=""></option>
 				<option <c:if test="${pay eq'1'}">selected</c:if> value="1">有</option>
 				<option <c:if test="${pay eq'0'}">selected</c:if> value="0">無</option>				
 			</select>
         </div>
-        <div class="input-prepend">
-		<span class="add-on">星期</span>
-            <select name="week" id="week">
+        <div class="input-group">
+			<span class="input-group-addon">星期</span>
+            <select name="week" class="form-control" id="week">
 				<option value=""></option>
 				<option <c:if test="${week eq'1'}">selected</c:if> value="1">一</option>
 				<option <c:if test="${week eq'2'}">selected</c:if> value="2">二</option>
@@ -138,50 +125,53 @@ $(document).ready(function() {
 			</select>
         </div>
         
-        <div class="input-prepend input-append">
-			<span class="add-on">第</span>
-            <select name="begin" id="begin" onChange="$('#end').val(this.value)">
+        <div class="input-group">
+				<span class="input-group-addon">節次自</span>
+            <select name="begin" id="begin" class="form-control" onChange="$('#end').val(this.value)">
 				<option value=""></option>
 				<c:forEach begin="1" end="16" varStatus="d">
-				<option <c:if test="${begin == d.index}">selected</c:if> value="${d.index}">${d.index}</option>
+				<option <c:if test="${begin == d.index}">selected</c:if> value="${d.index}">第${d.index}節</option>
 				</c:forEach>
 			</select>
-			<span class="add-on">節</span>
         </div>
 		
-		<div class="input-prepend input-append">
-			<span class="add-on">至</span>
-            <select name="end" id="end" class="selectpicker" data-style="btn-danger">
+		<div class="input-group">
+			<span class="input-group-addon">至</span>
+            <select name="end" id="end" class="form-control" data-style="btn-danger">
 				<option value=""></option>
 				<c:forEach begin="1" end="16" varStatus="d">
-				<option <c:if test="${end == d.index}">selected</c:if> value="${d.index}">${d.index}</option>
+				<option <c:if test="${end == d.index}">selected</c:if> value="${d.index}">第${d.index}節</option>
 				</c:forEach>
 			</select>
-			<span class="add-on">節</span>
         </div>
         </span>
-		<div class="btn-group">
+		<div class="btn-group" >
 		<button class="btn btn-danger" name="method:search">查詢</button>
-		<a class="btn" href="PubCsSearch">重新設定條件</a>
+		<a class="btn btn-default" href="PubCsSearch">重新設定條件</a>
 		</div>
 		</td>
 	</tr>
 </table>
+
+</div>
+
 </form>    
 <c:if test="${!empty dtimes}">
+<div class="panel panel-primary">
+	<div class="panel-heading">查詢結果</div>
 <display:table name="${dtimes}" requestURI="PubCsSearch" export="false" id="row" sort="list" excludedParams="*" class="table table-hover" >
 	<display:column title="學年" class="left">${row.school_year}-${row.school_term}</display:column>
   	<display:column title="課程編號" property="Oid" sortable="true" class="left" />
   	<display:column title="課程名稱" style="{whitespace: nowrap; }"  property="chi_name" sortable="true" class="left"/>
   	<display:column title="開課班級" sortable="true" class="left">${row.ClassName}
   	<c:if test="${!empty row.Oid}">
-  	<a href="#timeInfo" data-toggle="modal" onClick="getClassTime('${row.ClassNo}', '${row.ClassName}')">課表</a>
+  	<a data-toggle="modal" data-target=".bs-example-modal-lg" onClick="getClassTime('${row.ClassNo}', '${row.ClassName}')">課表</a>
   	</c:if>
   	</display:column>
   	<display:column title="授課教師" sortable="true" class="left">${row.cname}<a href="">
   	<c:if test="${!empty row.Oid}">
   	<c:if test="${!empty row.cname}">  	
-  	<a href="#timeInfo" data-toggle="modal" onClick="getTeacherTime('${row.emplOid}', '${row.cname}')">課表</a>
+  	<a data-toggle="modal" data-target=".bs-example-modal-lg" onClick="getTeacherTime('${row.emplOid}', '${row.cname}')">課表</a>
   	</c:if>
   	</c:if>
   	</display:column>
@@ -210,7 +200,7 @@ $(document).ready(function() {
     <c:when test="${t.week==6}">週六</c:when>
     <c:otherwise>週${t.week},</c:otherwise>
 	</c:choose>
-  	${t.begin}~${t.end}節${t.place}<a href="#timeInfo" data-toggle="modal" onClick="getRoomTime('${row.time[0].place}', '${row.time[0].place}教室')">課表</a><br>
+  	${t.begin}~${t.end}節${t.place}<a data-toggle="modal" data-target=".bs-example-modal-lg" onClick="getRoomTime('${row.time[0].place}', '${row.time[0].place}教室')">課表</a><br>
   	</c:forEach>
   	</c:if>
   	<c:if test="${empty row.Oid}">
@@ -228,6 +218,7 @@ $(document).ready(function() {
   	
   	</display:column>
 </display:table>
+</div>
 </c:if>
 <script>  
 $("#year").keyup(function(){
@@ -257,18 +248,28 @@ function weekShow(){
 
 </script>
 
+
+
+
+
 <!-- Modal -->
-<div id="timeInfo" class="modal hide fade" tabindex="-1" role="dialog"
-	aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal"
-			aria-hidden="true">×</button>
-		<h3 id="title"></h3>
-	</div>
-	<div class="modal-body" id="info"></div>
-	<div class="modal-footer">
-		<button class="btn" data-dismiss="modal" aria-hidden="true">關閉</button>
-	</div>
+<div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h3 id="title"></h3>
+      </div>
+      <div class="modal-body" id="info"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
 </div>
+
+
 </body>
 </html>

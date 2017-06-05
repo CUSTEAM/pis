@@ -23,7 +23,15 @@ public class PubCsSearchAction extends BaseAction{
 	public String search(){
 		
 		String school_year=getContext().getAttribute("school_year").toString();
-		if(year.trim().equals(""))year=school_year;
+		if(year.trim().equals("")){
+			//若空白則設為本學年
+			year=school_year;
+		}else{
+			//若現在為下學期，且查次學年學年
+			if(getContext().getAttribute("school_term").equals("2")&&Integer.parseInt(year)-Integer.parseInt(school_year)==1){
+				year=school_year;
+			}			
+		}		
 		if(year.equals(school_year)){
 			if(place.trim().equals("")){
 				request.setAttribute("dtimes", getDtimes());
@@ -34,6 +42,32 @@ public class PubCsSearchAction extends BaseAction{
 		}else{
 			request.setAttribute("dtimes", getSavedtimes());
 		}
+			
+		
+		/*if(year.equals(school_year)){
+			//當學年
+			if(!place.trim().equals("")){
+				//教室課表
+				request.setAttribute("dtimes", getDtimes());
+			}else{
+				//一般查詢
+				request.setAttribute("dtimes", getDtimeClass(school_year));
+			}
+			
+		}else{
+			//非當學年
+			if(school_term.equals("2")&&
+			term.equals("1")&&
+			school_year-Integer.parseInt(year)==1){
+				//若現在是下學期，查的是下學年上學期
+				request.setAttribute("dtimes", getDtimes());//給Dtime
+			}{
+				//否則就給Dtimesave
+				request.setAttribute("dtimes", getSavedtimes());
+			}
+				
+			
+		}*/
 		
 		
 		return SUCCESS;
@@ -84,10 +118,11 @@ public class PubCsSearchAction extends BaseAction{
 		}
 		//教師
 		//if(!techid.equals("")){
-		if(techid.indexOf(",")>0){
+		if(techid.indexOf(",")>-1){
 			sql.append("AND e.Oid ="+techid.substring(0, techid.indexOf(","))+" ");
 		}else{
-			sql.append("AND cl.CampusNo='"+cno+"'");//若非查詢老師則要加上校區，查老師則不用
+			//sql.append("AND cl.CampusNo='"+cno+"'");//若非查詢老師則要加上校區，查老師則不用
+			sql.append("AND e.cname ='"+techid+"'");
 		}
 		if(!opt.equals("")){sql.append("AND d.opt='"+opt+"'");}
 		if(!pay.equals("")){sql.append("AND d.extrapay='"+pay+"'");}
@@ -108,7 +143,7 @@ public class PubCsSearchAction extends BaseAction{
 			sql.append(")");
 		}
 		sql.append("ORDER BY d.Sterm");
-		
+		System.out.println(sql);
 		//教師追加留校
 		if(techid.indexOf(",")<0){
 			return sortOut(df.sqlGet(sql.toString()), true);
@@ -149,7 +184,15 @@ public class PubCsSearchAction extends BaseAction{
 				}
 				
 				//教師
-				if(!techid.equals("")){sql.append("AND e.cname ='"+techid.substring(0, techid.indexOf(","))+"' ");}				
+				if(!techid.equals("")){
+					if(techid.indexOf(",")>-1){
+						sql.append("AND e.cname ='"+techid.substring(0, techid.indexOf(","))+"' ");
+					}else{
+						sql.append("AND e.cname ='"+techid+"' ");
+					}
+					
+					
+				}				
 				sql.append(" GROUP BY d.Oid ORDER BY cl.ClassNo");
 				
 		//return sortOut(df.sqlGet(sql.toString()));
