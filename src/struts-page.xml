@@ -4,7 +4,7 @@
     <package name="publicAccess" extends="abstract_struts" namespace="/">
         <!-- 新生 -->			
 		<action name="StdProfileEdit" class="action.StdProfileEditAction">
-			<result>jsp/StdProfileEdit.jsp</result>
+			<result>jsp/StdProfileEdit/StdProfileEdit.jsp</result>
 		</action>	
 		<!-- 課程 -->
 		<action name="PubCsSearch" class="action.PubCsSearchAction">
