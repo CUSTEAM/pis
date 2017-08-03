@@ -1,4 +1,4 @@
-<%@ page session="false" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
@@ -17,27 +17,20 @@
 <meta name="ROBOTS" content="none">
 <title><decorator:title default="Welcome!" /> - 中華科大教職員資訊系統</title>
 <link rel="stylesheet" href="/eis/inc/bootstrap/css/bootstrap.css" />
+<link rel="stylesheet" href="/eis/inc/bootstrap/css/bootstrap-theme.css" />
 <link rel="stylesheet" href="/eis/inc/css/advance.css" />
-<script src="/eis/inc/js/jquery.js"></script>
-<script src="/eis/inc/bootstrap/js/bootstrap.js"></script>
-<script src="/eis/inc/js/plugin/jquery.blockUI.js"></script>
+<link href="/eis/inc/bootstrap/css/docs.min.css" rel="stylesheet"/>
+<link href="/eis/inc/bootstrap/plugin/silviomoreto-bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet"/>
 <link rel="stylesheet" href="/eis/inc/bootstrap/plugin/bootstrap-submenu/css/bootstrap-submenu.min.css">
-<script src="/eis/inc/bootstrap/plugin/bootstrap-submenu/js/bootstrap-submenu.min.js" defer></script>
-
-<!--[if lt IE 9]>
-<script type="text/javascript">
-/*if (window.confirm('偵測到系統不支援的IE瀏覽器版本, 請問是否要下載最新瀏覽器?')) {
-    window.location.href='http://windows.microsoft.com/zh-tw/internet-explorer/download-ie';
-}*/
-window.location.href='http://mozilla.com.tw';
-</script>
-<![endif]-->
+<script src="/eis/inc/js/jquery.js"></script>
 <decorator:head />
 </head>
-<body
-	<decorator:getProperty property="body.onload" writeEntireProperty="true" />>
+<body <decorator:getProperty property="body.onload" writeEntireProperty="true" />>
 	
-	
+	<div id="mainmenu" style="height:40px;"></div>
+	<div class="content-page-3">
+		<decorator:body />
+	</div>
 	
 	<c:if test="${!empty msg}">
 		<script>
@@ -65,22 +58,17 @@ window.location.href='http://mozilla.com.tw';
 					<p>點畫面任意處繼續...</p>
 					</div>
 					<div class="modal-footer">
-						<button class="btn" data-dismiss="modal" aria-hidden="true">關閉</button>
+						<button class="btn btn-lg btn-primary" data-dismiss="modal" aria-hidden="true">關閉</button>
 					</div>
 				</div>
 			</div>
 		</div>
-	</c:if>
-	
-	
-	
-	
-	
-	
-	<div id="mainmenu"></div>	
-	<div class="content-page-3">
-		<decorator:body />
-	</div>
-
+	</c:if>	
+<script src="/eis/inc/bootstrap/js/bootstrap.js"></script>
+<script src="/eis/inc/js/plugin/jquery.blockUI.js"></script>
+<script src="/eis/inc/bootstrap/plugin/bootstrap-submenu/js/bootstrap-submenu.min.js" defer></script>
+<script src="/eis/inc/bootstrap/plugin/silviomoreto-bootstrap-select/js/bootstrap-select.min.js"></script>
+<script src="/eis/inc/bootstrap/plugin/silviomoreto-bootstrap-select/js/i18n/defaults-zh_TW.min.js"></script>
+<script src="/eis/inc/js/advance.js"></script>
 </body>
 </html>

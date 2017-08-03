@@ -10,6 +10,16 @@
 		<action name="PubCsSearch" class="action.PubCsSearchAction">
 			<result>jsp/PubCsSearch.jsp</result>
 		</action>	
+		
+		<action name="SylDoc" class="print.dtime.SylDoc">
+			<result name="success">null</result>
+		</action>
+		
+		<action name="IntorDoc" class="print.dtime.IntorDoc">
+			<result name="success">null</result>
+		</action>
+		
+		
 		<!-- 時程 -->
 		<action name="PubTimeSearch" class="action.PubTimeSearchAction">
 			<result>jsp/PubTimeSearch.jsp</result>

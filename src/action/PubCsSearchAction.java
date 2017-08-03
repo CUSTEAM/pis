@@ -23,6 +23,7 @@ public class PubCsSearchAction extends BaseAction{
 	public String search(){
 		
 		String school_year=getContext().getAttribute("school_year").toString();
+		
 		if(year.trim().equals("")){
 			//若空白則設為本學年
 			year=school_year;
@@ -120,10 +121,11 @@ public class PubCsSearchAction extends BaseAction{
 		//if(!techid.equals("")){
 		if(techid.indexOf(",")>-1){
 			sql.append("AND e.Oid ="+techid.substring(0, techid.indexOf(","))+" ");
-		}else{
-			//sql.append("AND cl.CampusNo='"+cno+"'");//若非查詢老師則要加上校區，查老師則不用
-			sql.append("AND e.cname ='"+techid+"'");
 		}
+		//else{
+			//sql.append("AND cl.CampusNo='"+cno+"'");//若非查詢老師則要加上校區，查老師則不用
+			//sql.append("AND e.cname ='"+techid+"'");
+		//}
 		if(!opt.equals("")){sql.append("AND d.opt='"+opt+"'");}
 		if(!pay.equals("")){sql.append("AND d.extrapay='"+pay+"'");}
 		if(!ele.equals("")){sql.append("AND d.elearning='"+ele+"'");}

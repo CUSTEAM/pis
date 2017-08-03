@@ -9,7 +9,6 @@
 
 <title>課程查詢</title>
 <script src="/eis/inc/js/plugin/bootstrap-typeahead.js"></script>
-<script src="/eis/inc/js/plugin/json2.js"></script>
 <script src="/eis/inc/js/plugin/jquery-ui.js"></script>
 <script src="/eis/inc/js/plugin/bootstrap-tooltip.js"></script>
 <script src="/eis/inc/js/plugin/jquery-ui-timepicker-addon.js" type="text/javascript"></script>
@@ -31,9 +30,8 @@ $(document).ready(function() {
 <body>
     
     
-<div class="bs-callout bs-callout-warning" id="callout-helper-pull-navbar">
-<button type="button" class="close" data-dismiss="alert">&times;</button>
-<strong>課程查詢</strong> 輸入教師名稱查詢留校時間, 非本學期資料依各單位公佈或留存為準
+<div class="bs-callout bs-callout-info">
+<h4>課程查詢</h4> 輸入教師名稱查詢留校時間, 非本學期資料依各單位公佈或留存為準
 </div>
 
 <form action="PubCsSearch" method="post"  class="form-inline">
@@ -182,8 +180,8 @@ $(document).ready(function() {
   	<display:column title="" class="center">
   	<c:if test="${!empty row.Oid}">
 	  	<c:choose>
-		<c:when test="${year==school_year}"><a href="/csis/SylDoc?Dtime_oid=${row.Oid}">大綱</a>|<a href="/csis/IntorDoc?Dtime_oid=${row.Oid}">簡介</a></c:when>
-		<c:when test="${year!=school_year}"><a href="/csis/SylDoc?Savedtime_oid=${row.Oid}">大綱</a>|<a href="/csis/IntorDoc?Savedtime_oid=${row.Oid}">簡介</a></c:when>
+		<c:when test="${year==school_year}"><a href="SylDoc?Dtime_oid=${row.Oid}">大綱</a>|<a href="/csis/IntorDoc?Dtime_oid=${row.Oid}">簡介</a></c:when>
+		<c:when test="${year!=school_year}"><a href="SylDoc?Savedtime_oid=${row.Oid}">大綱</a>|<a href="/csis/IntorDoc?Savedtime_oid=${row.Oid}">簡介</a></c:when>
 		</c:choose>  	
 	</c:if>
   	</display:column>
