@@ -2,6 +2,7 @@ package action;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 import model.Message;
@@ -91,7 +92,7 @@ public class StdProfileEditAction extends BaseAction{
 	}
 	
 	private Map getStd(String stdNo, String id, String bd){		
-		StringBuilder sql=new StringBuilder("SELECT c.ClassName,s.* FROM stmd s,Class c WHERE s.depart_class=c.ClassNo ");
+		StringBuilder sql=new StringBuilder("SELECT c.Grade, c.ClassName,s.* FROM stmd s,Class c WHERE s.depart_class=c.ClassNo ");
 		if(stdNo!=null){
 			sql.append("AND s.student_no='"+stdNo+"'");
 		}else{
@@ -107,6 +108,14 @@ public class StdProfileEditAction extends BaseAction{
 	
 	public String login() throws ParseException{
 		
+		Calendar c=Calendar.getInstance();
+		System.out.println(c.get(Calendar.MONTH));
+		if(c.get(Calendar.MONTH)<7 || c.get(Calendar.MONTH)>8){
+			Message msg=new Message();
+			msg.setError("非辦理期間");
+			savMessage(msg);
+			return SUCCESS;
+		}
 
 		request.setAttribute("group", df.sqlGet("SELECT idno,name FROM code5 WHERE category='group' ORDER BY sequence;"));
 		request.setAttribute("Aborigine", df.sqlGet("SELECT Code,Name From Aborigine"));
@@ -114,6 +123,14 @@ public class StdProfileEditAction extends BaseAction{
 		
 		//stmd要有新生的班級、學號、姓名、身份證、生日，RegistrationCard要有新生的學號
 		Map std=getStd(null, idno, birthday);
+		//System.out.println(std);
+		if(!std.get("Grade").equals("1")){
+			Message msg=new Message();
+			msg.setError("非新生身份請至註冊單位辦理");
+			savMessage(msg);
+			return SUCCESS;			
+		}
+		
 		
 		if(std==null){	
 			Message msg=new Message();
