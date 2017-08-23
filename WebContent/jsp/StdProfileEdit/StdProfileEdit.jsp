@@ -160,7 +160,7 @@
 									</div>
 									<div class="form-group">
 										<label class="sr-only" >西元出生日期</label> <input
-											type="text" name="birthday" placeholder="西元出生日期 (民國年+1911)"
+											type="text" name="birthday" placeholder="西元出生日期  (如88年8月8日出生為1999-08-08)"
 											class="login dateinput">
 									</div>
 									<label>
@@ -552,6 +552,7 @@ $(".dateinput").datepicker({
 	yearRange: "-40:-15",
 	//showButtonPanel: true,
 	//dateFormat: 'yymmdd'
+	defaultDate: new Date(${school_year+1911-20}, 00, 01)
 });
 
 //$("input[name='beginDate'], input[name='endDate']" ).datepicker();

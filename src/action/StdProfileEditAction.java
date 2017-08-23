@@ -107,11 +107,17 @@ public class StdProfileEditAction extends BaseAction{
 	}
 	
 	public String login() throws ParseException{
+		Message msg=new Message();
+		if(idno.trim().equals("")||birthday.trim().equals("")){
+			msg.setError("驗證錯誤");
+			savMessage(msg);
+			return SUCCESS;			
+		}
 		
 		Calendar c=Calendar.getInstance();
 		System.out.println(c.get(Calendar.MONTH));
 		if(c.get(Calendar.MONTH)<7 || c.get(Calendar.MONTH)>8){
-			Message msg=new Message();
+			
 			msg.setError("非辦理期間");
 			savMessage(msg);
 			return SUCCESS;
@@ -125,7 +131,7 @@ public class StdProfileEditAction extends BaseAction{
 		Map std=getStd(null, idno, birthday);
 		//System.out.println(std);
 		if(!std.get("Grade").equals("1")){
-			Message msg=new Message();
+			
 			msg.setError("非新生身份請至註冊單位辦理");
 			savMessage(msg);
 			return SUCCESS;			
@@ -133,7 +139,7 @@ public class StdProfileEditAction extends BaseAction{
 		
 		
 		if(std==null){	
-			Message msg=new Message();
+			
 			msg.setError("驗證錯誤");
 			savMessage(msg);
 			return SUCCESS;
@@ -143,6 +149,8 @@ public class StdProfileEditAction extends BaseAction{
 			df.exSql("UPDATE stmd SET edited='1' WHERE student_no ='"+std.get("student_no")+"'");
 		}
 		
+		msg.setError("歡迎");
+		savMessage(msg);
 		return SUCCESS;
 	}
 }
