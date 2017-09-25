@@ -180,8 +180,8 @@ $(document).ready(function() {
   	<display:column title="" class="center">
   	<c:if test="${!empty row.Oid}">
 	  	<c:choose>
-		<c:when test="${year==school_year}"><a href="SylDoc?Dtime_oid=${row.Oid}">大綱</a>|<a href="/csis/IntorDoc?Dtime_oid=${row.Oid}">簡介</a></c:when>
-		<c:when test="${year!=school_year}"><a href="SylDoc?Savedtime_oid=${row.Oid}">大綱</a>|<a href="/csis/IntorDoc?Savedtime_oid=${row.Oid}">簡介</a></c:when>
+		<c:when test="${year==school_year}"><a href="/pis/SylDoc?Dtime_oid=${row.Oid}">大綱</a>|<a href="/csis/IntorDoc?Dtime_oid=${row.Oid}">簡介</a></c:when>
+		<c:when test="${year!=school_year}"><a href="/pis/SylDoc?Savedtime_oid=${row.Oid}">大綱</a>|<a href="/csis/IntorDoc?Savedtime_oid=${row.Oid}">簡介</a></c:when>
 		</c:choose>  	
 	</c:if>
   	</display:column>

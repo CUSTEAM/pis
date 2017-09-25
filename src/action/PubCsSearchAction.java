@@ -103,7 +103,7 @@ public class PubCsSearchAction extends BaseAction{
 		+ "gsed,cl.ClassName, e.cname, c.chi_name, d.Oid, d.credit, d.opt, " +
 		"d.open, d.thour, d.elearning, d.stu_select, d.techid, d.Sterm as school_term, cl.ClassNo FROM CODE_DTIME_OPT cdo," +
 		"(Dtime d LEFT OUTER JOIN empl e ON d.techid=e.idno), Csno c, Class cl " +
-		"WHERE cdo.id=d.opt AND d.cscode=c.cscode AND d.Sterm='"+term+"'AND d.depart_class=cl.ClassNo ");		
+		"WHERE cdo.id=d.opt AND d.cscode=c.cscode AND d.Sterm='"+term+"'AND d.depart_class=cl.ClassNo AND cl.CampusNo='"+cno+"'");		
 		//if(!cno.equals(""))sql.append("AND cl.CampusNo='"+cno+"'");
 		if(!sno.equals(""))sql.append("AND cl.SchoolNo='"+sno+"'");
 		if(!dno.equals(""))sql.append("AND cl.DeptNo='"+dno+"'");
@@ -145,7 +145,7 @@ public class PubCsSearchAction extends BaseAction{
 			sql.append(")");
 		}
 		sql.append("ORDER BY d.Sterm");
-		System.out.println(sql);
+		//System.out.println(sql);
 		//教師追加留校
 		if(techid.indexOf(",")<0){
 			return sortOut(df.sqlGet(sql.toString()), true);

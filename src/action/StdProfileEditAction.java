@@ -129,15 +129,7 @@ public class StdProfileEditAction extends BaseAction{
 		
 		//stmd要有新生的班級、學號、姓名、身份證、生日，RegistrationCard要有新生的學號
 		Map std=getStd(null, idno, birthday);
-		//System.out.println(std);
-		if(!std.get("Grade").equals("1")){
-			
-			msg.setError("非新生身份請至註冊單位辦理");
-			savMessage(msg);
-			return SUCCESS;			
-		}
-		
-		
+		System.out.println(std);
 		if(std==null){	
 			
 			msg.setError("驗證錯誤");
@@ -148,6 +140,15 @@ public class StdProfileEditAction extends BaseAction{
 			request.setAttribute("std", std);
 			df.exSql("UPDATE stmd SET edited='1' WHERE student_no ='"+std.get("student_no")+"'");
 		}
+		if(!std.get("Grade").equals("1")){
+			
+			msg.setError("非新生身份請至註冊單位辦理");
+			savMessage(msg);
+			return SUCCESS;			
+		}
+		
+		
+		
 		
 		msg.setError("歡迎");
 		savMessage(msg);

@@ -111,7 +111,7 @@
                 <c:if test="${!empty std}">
                 <div class="col-lg-12">
                     <span id="files">
-                    <img class="img-circle" onerror="ImgError(this);" src='/eis/getStdimage?myStdNo=${myStdNo}&t="+Math.floor(Math.random()*999)+"'>
+                    <img class="img-circle" onerror="ImgError(this);" src="/eis/getStdimage?myStdNo=${myStdNo}">
                     </span>
                     <div class="intro-text">                        
                     <span class="btn btn-link-2 fileinput-button">

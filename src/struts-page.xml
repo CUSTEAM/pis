@@ -2,10 +2,10 @@
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN" "http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
     <package name="publicAccess" extends="abstract_struts" namespace="/">
-        <!-- 新生 -->			
+        <!-- 新生>			
 		<action name="StdProfileEdit" class="action.StdProfileEditAction">
 			<result>jsp/StdProfileEdit/StdProfileEdit.jsp</result>
-		</action>	
+		</action-->	
 		<!-- 課程 -->
 		<action name="PubCsSearch" class="action.PubCsSearchAction">
 			<result>jsp/PubCsSearch.jsp</result>
