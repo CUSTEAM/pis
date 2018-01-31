@@ -32,6 +32,15 @@
             	<value>model/PubCalendar.hbm.xml</value>
             	<value>model/DilgApplyHist.hbm.xml</value>
             	<value>model/Just.hbm.xml</value>
+            	<value>model/Enroll.hbm.xml</value>
+				<value>model/EnrollAttach.hbm.xml</value>
+				<value>model/EnrollDept.hbm.xml</value>
+				<value>model/EnrollRegist.hbm.xml</value>
+				<value>model/EnrollRegistAttach.hbm.xml</value>
+				<value>model/EnrollRegistDept.hbm.xml</value>
+				<value>model/EnrollRegistHist.hbm.xml</value>
+				<value>model/EnrollStmd.hbm.xml</value>
+            	
             </list>
         </property>
     </bean>

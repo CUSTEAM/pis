@@ -70,5 +70,12 @@
 <script src="/eis/inc/bootstrap/plugin/silviomoreto-bootstrap-select/js/bootstrap-select.min.js"></script>
 <script src="/eis/inc/bootstrap/plugin/silviomoreto-bootstrap-select/js/i18n/defaults-zh_TW.min.js"></script>
 <script src="/eis/inc/js/advance.js"></script>
+<c:if test="${empty cookie['unit']}">
+<script>
+$.ajaxSetup({cache: false});
+window.onbeforeunload=function(){$.unblockUI();};
+$("#mainmenu").load("/pis/jsp/decorators/menu_3.jsp?r="+Math.floor(Math.random()*11));
+</script>
+</c:if>
 </body>
 </html>

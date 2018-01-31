@@ -14,6 +14,26 @@
 		<action name="parentLoginApp" class="ajax.parentLoginApp">
 			<result type="json"/>
 		</action>
+		
+		<!-- ajax 上傳檔案 -->
+		<action name ="putEnrollFtpFile" class ="ajax.ftp.putEnrollFtpFile" > 
+            <result type="json">
+            	<param name="newFileName">newFileName</param>
+			 	<param name="callbackParameter">back</param>
+			</result>
+        </action > 
+        
+		
+        
+        <action name="getFtpFile" class="ajax.ftp.getFtpFile">
+		    <result type="stream">  
+		        <!--param name="contentType">${mimeType}</param-->
+		        <param name="contentType">application/octet-stream</param>
+		        <param name="inputName">inStream</param>  
+		        <param name="contentDisposition">attachment;filename="${filename}"</param> 
+		        <param name="bufferSize">1024</param>
+	    	</result>		    
+		</action>	
 	</package>
 	
 	

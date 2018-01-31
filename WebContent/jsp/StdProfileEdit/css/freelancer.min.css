@@ -325,7 +325,8 @@ hr.cont-primary:after {
 
 header {
 	text-align: center;
-	background: #2967A5;
+	background: #5595d5;
+	/*background: #abd3d8;*/
 	/*background-image: repeating-linear-gradient(30deg, hsla(0,0%,100%,.1), hsla(0,0%,100%,.1) 15px, transparent 0, transparent 30px);著作权归作者所有。
 */
 	color: #fff
