@@ -95,7 +95,7 @@
     <div class="container">
         
        
-	<form role="form" action="PubEnroll" method="post" class="form-signin" onsubmit="return confirm('已確認申請資料?');">  
+	<form role="form" action="EnrollView" method="post" class="form-signin" onsubmit="return confirm('已確認申請資料?');">  
 		<div id="smartwizard">
         <ul>
 			<li><a href="#step-1">考生資訊服務<br /><small>檢視各項報名資料或補件</small></a></li>
@@ -103,20 +103,23 @@
         <div>
 	        <div id="step-1" style="margin-top:20px;">
 		        <div class="row">
-					<div class="col-lg-6">  
+					<div class="col-sm-6">  
 						<div class="row control-group has-float-label">
-							<div class="form-group col-xs-12 floating-label-form-group controls">
+							<div class="form-group col-sm-12 floating-label-form-group controls">
 							報名考試項目
 							<input readonly type="text" disabled value="${oStd.enroll.enroll_name}" class="form-control" />
 							<p class="help-block text-danger"></p>
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-6">  
+					<div class="col-sm-6">  
 						<div class="row control-group has-float-label">
-							<div class="form-group col-xs-3 floating-label-form-group controls">
-							准考證號
-							<input readonly type="text" disabled value="${oStd.reg.no}" class="form-control" />
+							<div class="form-group col-sm-12 floating-label-form-group controls">
+							准考證
+							<c:if test="${empty oStd.reg.no}"><input readonly type="text" disabled value="未核發" style="width:100%;" class="form-control" /></c:if>
+							<c:if test="${!empty oStd.reg.no}"><input readonly type="text" disabled value="${oStd.reg.no}" style="width:100%;" class="form-control" /></c:if>
+							
+							
 							<p class="help-block text-danger"></p>
 							</div>
 						</div>
@@ -125,26 +128,26 @@
 				
 				
 				
-				<c:if test="${!empty oStd.reg.score}">
+				<c:if test="${o_score}">
 				<div class="row">
-					<div class="col-lg-12">  
+					<div class="col-sm-12">  
 						<div class="row control-group has-float-label">
-							<div class="form-group col-xs-3 floating-label-form-group controls">
+							<div class="form-group col-sm-3 floating-label-form-group controls">
 							筆試
 							<input readonly type="text" disabled value="${oStd.reg.score1}" class="form-control" />
 							<p class="help-block text-danger"></p>
 							</div>
-							<div class="form-group col-xs-3 floating-label-form-group controls">
+							<div class="form-group col-sm-3 floating-label-form-group controls">
 							口試
 							<input readonly type="text" disabled value="${oStd.reg.score2}" class="form-control" />
 							<p class="help-block text-danger"></p>
 							</div>
-							<div class="form-group col-xs-3 floating-label-form-group controls">
+							<div class="form-group col-sm-3 floating-label-form-group controls">
 							書面
 							<input readonly type="text" disabled value="${oStd.reg.score3}" class="form-control" />
 							<p class="help-block text-danger"></p>
 							</div>
-							<div class="form-group col-xs-3 floating-label-form-group controls">
+							<div class="form-group col-sm-3 floating-label-form-group controls">
 							總成績
 							<input readonly type="text" disabled value="${oStd.reg.score}" class="form-control" />
 							<p class="help-block text-danger"></p>
@@ -156,22 +159,36 @@
 				
 				<c:forEach items="${oStd.dept}" var="d" varStatus="i">
 				<div class="row">
-					<div class="col-lg-12">  
+					<div class="col-sm-12">  
 						<div class="row control-group has-float-label">
-							<div class="form-group col-xs-12 floating-label-form-group controls">
-							第${i.index+1}志願
-							<c:if test="${empty d.rank}">
+							<div class="form-group col-sm-12 floating-label-form-group controls">
+							第${i.index+1}志願 							
+							<c:if test="${!o_match}">
 							<input readonly type="text" disabled value="${d.CampusName}${d.SchoolName} - ${d.dept_name}" class="form-control" />
 							</c:if>
-							<c:if test="${d.rank<0}">
-							<input readonly type="text" disabled value="${d.CampusName}${d.SchoolName} - ${d.dept_name} 【未錄取】" class="form-control" />
+							
+							<c:if test="${o_match}">							
+							<c:choose>         
+								<c:when test="${empty d.rank}">
+					            <input readonly type="text" disabled value="${d.CampusName}${d.SchoolName} - ${d.dept_name} 【未錄取】" class="form-control" />
+					         	</c:when>					         
+					         	<c:when test="${d.rank==0}">						            
+					            <c:if test="${!empty d.checkin}">
+					         	<button class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span> 已報到</button>			            
+					            </c:if>
+					            
+					            <input readonly type="text" disabled value="${d.CampusName}${d.SchoolName} - ${d.dept_name} 【正取】" class="form-control" />
+					            </c:when>
+					         	<c:when test="${d.rank>0}">
+					            <input readonly type="text" disabled value="${d.CampusName}${d.SchoolName} - ${d.dept_name} 【備取${d.rank}】" class="form-control" />
+					         	</c:when>
+					         	<c:otherwise>
+					            No comment sir...
+					         	</c:otherwise>
+					     	</c:choose>
+							
 							</c:if>
-							<c:if test="${d.rank==0}">
-							<input readonly type="text" disabled value="${d.CampusName}${d.SchoolName} - ${d.dept_name} 【正取】" class="form-control" />
-							</c:if>
-							<c:if test="${d.rank>0}">
-							<input readonly type="text" disabled value="${d.CampusName}${d.SchoolName} - ${d.dept_name} 【備取${d.rank}】" class="form-control" />
-							</c:if>
+							
 							<p class="help-block text-danger"></p>
 							</div>
 						</div>
@@ -180,21 +197,31 @@
 				</c:forEach>
 				
 				<div class="row">
-					<div class="col-lg-6">  
+					<div class="col-sm-4">  
 						<div class="row control-group has-float-label">
-							<div class="form-group col-xs-12 floating-label-form-group controls">
+							<div class="form-group col-sm-12 floating-label-form-group controls">
 							簡章
-							<input onClick="window.open('/pis/getFtpFile?&file=${oStd.enroll.brochure}');" type="text" readonly value="下載簡章" class="form-control" />
+							<input style="cursor: pointer;" onClick="window.open('/pis/getFtpFile?path=enroll&file=${oStd.enroll.brochure}');" type="text" readonly value="下載簡章" class="form-control" />
+							<p class="help-block text-danger"></p>
+							</div>
+						</div>
+					</div>
+					
+					<div class="col-sm-4">  
+						<div class="row control-group has-float-label">
+							<div class="form-group col-sm-12 floating-label-form-group controls">
+							報名表 
+							<input style="cursor: pointer;" onClick="window.open('/pis/EnrollDoc?idno=${oStd.idno}');" type="text" readonly value="下載報名表" class="form-control" />
 							<p class="help-block text-danger"></p>
 							</div>
 						</div>
 					</div>
 				
-					<div class="col-lg-6">  
+					<div class="col-sm-4">  
 						<div class="row control-group has-float-label">
-							<div class="form-group col-xs-12 floating-label-form-group controls">
+							<div class="form-group col-sm-12 floating-label-form-group controls">
 							信封 
-							<input onClick="window.open('/pis/getFtpFile?&file=${oStd.enroll.envelope}');" type="text" readonly value="下載專用信封" class="form-control" />
+							<input style="cursor: pointer;" onClick="window.open('/pis/EnrollEnvelope?&idno=${oStd.idno}');" type="text" readonly value="下載專用信封" class="form-control" />
 							<p class="help-block text-danger"></p>
 							</div>
 						</div>
@@ -204,42 +231,34 @@
 				
 				<c:forEach items="${oStd.atta}" var="a" varStatus="i">
 				<div class="row">
-					<div class="col-lg-12">  
+					<div class="col-sm-12">  
 						<div class="row control-group has-float-label">
-							<div class="form-group col-xs-12 floating-label-form-group controls">
+							<div class="form-group col-sm-12 floating-label-form-group controls">
 							${a.attach_name}<c:if test="${empty a.online}"> <small><span class="label label-default">請郵寄</span></small></c:if><input type="hidden" name="attOid" value="${a.eOid}"/>					
 							<span class="btn btn-link-2 fileinput-button">
 				        	<i class="glyphicon glyphicon-cloud-upload"></i>
 				        	<span> 上傳檔案</span>
 				        	<input type="file" multiple name="myFile"  id="fileupload${a.eOid}" onClick="$('#progress .bar').css('width','0%');">
-				    		</span>
-				    		
+				    		</span>				    		
 		                    <c:if test="${empty a.path}">
-		                    <span class="btn btn-link-2 fileinput-button" id="f${a.eOid}"></span>
-		                    </c:if>
-		                    <c:if test="${!empty a.path}">
-		                    <span class="btn btn-link-2 fileinput-button">
-				        	<i class="glyphicon glyphicon-cloud-upload"></i>
-				        	<a href="/pis/getFtpFile?&file=${a.path}"><i class="glyphicon glyphicon-cloud-dowload"></i> 下載檔案</a>
+		                    <span class="btn btn-link-2 fileinput-button" id="f${a.eOid}">		                    
 		                    </span>
 		                    </c:if>
-		                    
-		                    
-		                   
+		                    <c:if test="${!empty a.path}">
+		                    <span class="btn btn-link-2 fileinput-button" id="f${a.eOid}">
+				        	<i class="glyphicon glyphicon-cloud-upload"></i>
+				        	<a href="/pis/getFtpFile?path=enroll&file=${a.path}"><i class="glyphicon glyphicon-cloud-dowload"></i> 下載檔案</a>
+		                    </span>
+		                    </c:if>
 							<p class="help-block text-danger"></p>
 							</div>
 						</div>
 					</div>
 				</div>
-				</c:forEach>
-				
+				</c:forEach>				
 	        </div>
-        </div>
-        
-        
-    
+        </div>    
 		</div>
-    
 		</form>
 	</div>
 
@@ -284,16 +303,14 @@ $("#fileupload${a.eOid}").fileupload({
     //formData:function(){return{useid:"enroll",idno:$("#idno").val(),eOid:}},
     dataType:"json",	        
     done: function (e, data) {
+    	$("#f${a.eOid}").html("<a href='/pis/getFtpFile?path=enroll/&file="+data.result.newFileName+"'><i class='glyphicon glyphicon-cloud-download'></i> 下載檔案</a>");
+    	setTimeout(function(){$.unblockUI();},300);
     	
-    	
-    	$("#f${a.eOid}").html("<a href='/pis/getFtpFile?&file="+data.result.newFileName+"'><i class='glyphicon glyphicon-cloud-download'></i> 下載檔案</a>");
-    	
-        $.unblockUI();
     },
     progressall: function (e, data) {
     	$.blockUI({ 
             theme:     true, 
-            title:    "影像處理中", 
+            title:    "檔案處理中", 
             message:  "<div id='progress' class='progress progress-success progress-striped'><div class='bar'></div></div>"
         }); 
         var progress = parseInt(data.loaded / data.total * 100, 10);

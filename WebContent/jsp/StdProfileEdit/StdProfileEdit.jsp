@@ -391,7 +391,7 @@
 				<div class="form-group col-xs-12 floating-label-form-group controls">
                    <br>
                    <button class="btn btn-danger " name="method:save" 
-                   type="submit" onClick="$.blockUI({message:null});">儲存輸入資料</button>
+                   type="submit" <c:if test="${oldman!=null}">disabled="disabled"</c:if> onClick="$.blockUI({message:null});">儲存輸入資料</button>
                    <br>
                    <input type="checkbox" checked disabled> 同意個人資料於校內各項工作使用
                </div>

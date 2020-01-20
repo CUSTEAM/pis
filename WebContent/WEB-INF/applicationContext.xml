@@ -19,10 +19,10 @@
         <property name="dataSource"><ref local="dataSource"/></property>
         <property name="hibernateProperties">
             <props>
-               <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
-               <prop key="hibernate.show_sql">false</prop>
-			   <prop key="hibernate.cache.provider_class">com.opensymphony.oscache.hibernate.OSCacheProvider</prop>
-			   <prop key="hibernate.cache.use_query_cache">true</prop>
+               	<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+			   	<prop key="hibernate.cache.provider_class">com.opensymphony.oscache.hibernate.OSCacheProvider</prop>
+			   	<prop key="hibernate.cache.use_query_cache">true</prop>
+			   	<prop key="hibernate.show_sql">true</prop>
 	     	</props>
         </property>     
         <property name="mappingResources">
@@ -40,7 +40,7 @@
 				<value>model/EnrollRegistDept.hbm.xml</value>
 				<value>model/EnrollRegistHist.hbm.xml</value>
 				<value>model/EnrollStmd.hbm.xml</value>
-            	
+            	<value>model/Stmd.hbm.xml</value>
             </list>
         </property>
     </bean>

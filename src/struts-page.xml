@@ -2,6 +2,21 @@
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN" "http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
     <package name="publicAccess" extends="abstract_struts" namespace="/">
+    	<!-- 刷卡 -->			
+		<action name="PunchCard" class="action.PunchCardAction">
+			<result>jsp/punchClock/punchCard.jsp</result>
+		</action>
+    	
+    	<!-- 退撫金報表 -->			
+		<action name="DownloadYearsaly" class="action.DownloadYearsalyAction">
+			<result name="success">null</result>
+		</action>
+    	
+    	<!-- 教育部下載資料審查 -->			
+		<action name="DownloadstmdPhp" class="action.DownloadstmdPhpAction">
+			<result name="success">null</result>
+		</action>
+    
         <!-- 新生-->			
 		<action name="StdProfileEdit" class="action.StdProfileEditAction">
 			<result>jsp/StdProfileEdit/StdProfileEdit.jsp</result>

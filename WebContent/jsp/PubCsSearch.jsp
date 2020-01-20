@@ -5,8 +5,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-
 <title>課程查詢</title>
 <script src="/eis/inc/js/plugin/bootstrap-typeahead.js"></script>
 <script src="/eis/inc/js/plugin/jquery-ui.js"></script>
@@ -180,8 +178,44 @@ $(document).ready(function() {
   	<display:column title="" class="center">
   	<c:if test="${!empty row.Oid}">
 	  	<c:choose>
-		<c:when test="${year==school_year}"><a href="/pis/SylDoc?Dtime_oid=${row.Oid}">大綱</a>|<a href="/csis/IntorDoc?Dtime_oid=${row.Oid}">簡介</a></c:when>
-		<c:when test="${year!=school_year}"><a href="/pis/SylDoc?Savedtime_oid=${row.Oid}">大綱</a>|<a href="/csis/IntorDoc?Savedtime_oid=${row.Oid}">簡介</a></c:when>
+		
+		
+		<c:when test="${year==school_year}">
+		
+		<div class="btn-group">
+	    <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">大綱</a>
+	    <ul class="dropdown-menu">
+	    	<li><a class="btn btn-link" href="/pis/SylDoc?Dtime_oid=${row.Oid}&type=ms">XLS</a></li>
+	    	<li><a class="btn btn-link" href="/pis/SylDoc?Dtime_oid=${row.Oid}&type=op">ODF</a></li>
+	    </ul>
+		</div>
+		<div class="btn-group">
+	    <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">簡介</a>
+	    <ul class="dropdown-menu">
+	    	<li><a class="btn btn-link" href="/pis/IntorDoc?Dtime_oid=${row.Oid}&type=ms">XLS</a></li>
+	    	<li><a class="btn btn-link" href="/pis/IntorDoc?Dtime_oid=${row.Oid}&type=op">ODF</a></li>
+	    </ul>
+		</div>
+		
+		</c:when>
+		
+		<c:when test="${year!=school_year}">
+		<div class="btn-group">
+	    <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">大綱</a>
+	    <ul class="dropdown-menu">
+	    	<li><a class="btn btn-link" href="/pis/SylDoc?Savedtime_oid=${row.Oid}&type=ms">XLS</a></li>
+	    	<li><a class="btn btn-link" href="/pis/SylDoc?Savedtime_oid=${row.Oid}&type=op">ODF</a></li>
+	    	<!--li><a class="btn btn-link" href="/csis/IntorDoc?Savedtime_oid=${row.Oid}&type=op">ODF</a></li-->
+	    </ul>
+		</div>
+		<div class="btn-group">
+	    <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">簡介</a>
+	    <ul class="dropdown-menu">
+	    	<li><a class="btn btn-link" href="/pis/IntorDoc?Savedtime_oid=${row.Oid}&type=ms">XLS</a></li>
+	    	<li><a class="btn btn-link" href="/pis/IntorDoc?Savedtime_oid=${row.Oid}&type=op">ODF</a></li>
+	    </ul>
+		</div>
+		</c:when>
 		</c:choose>  	
 	</c:if>
   	</display:column>

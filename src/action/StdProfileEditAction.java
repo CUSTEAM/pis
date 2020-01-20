@@ -4,8 +4,15 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
+
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
+
 import model.Message;
+import model.Stmd;
+import model.Wwpass;
 
 public class StdProfileEditAction extends BaseAction{
 	
@@ -92,6 +99,9 @@ public class StdProfileEditAction extends BaseAction{
 	}
 	
 	private Map getStd(String stdNo, String id, String bd){		
+		
+		
+		/*
 		StringBuilder sql=new StringBuilder("SELECT c.Grade, c.ClassName,s.* FROM stmd s,Class c WHERE s.depart_class=c.ClassNo ");
 		if(stdNo!=null){
 			sql.append("AND s.student_no='"+stdNo+"'");
@@ -99,6 +109,27 @@ public class StdProfileEditAction extends BaseAction{
 			sql.append("AND s.idno='"+id+"'AND s.birthday='"+bd+"'");
 		}
 		return df.sqlGetMap(sql.toString());
+		*/
+		
+		
+		SimpleDateFormat sf=new SimpleDateFormat("yyyy-MM-dd");
+		DetachedCriteria c = DetachedCriteria.forClass(Stmd.class);
+		c.add(Restrictions.eq("idno", id));
+		try {
+			c.add(Restrictions.and(    					
+				Restrictions.ge("birthday", sf.parseObject(bd)),
+	            // 取小於等於less than or equal
+	            Restrictions.le("birthday",sf.parseObject(bd)))
+			);
+		}catch(Exception e) {
+			return null;
+		}
+		List<Stmd>list=df.getHibernateDAO().getHibernateTemplate().findByCriteria(c);
+		if(list.size()>0) {
+			return df.sqlGetMap("SELECT c.Grade, c.ClassName,s.* FROM stmd s,Class c WHERE s.depart_class=c.ClassNo AND s.idno='"+idno+"'");
+		}else {
+			return null;
+		}		
 	}
 	
 	public String execute() throws Exception {		
@@ -141,7 +172,7 @@ public class StdProfileEditAction extends BaseAction{
 			df.exSql("UPDATE stmd SET edited='1' WHERE student_no ='"+std.get("student_no")+"'");
 		}
 		if(!std.get("Grade").equals("1")){
-			
+			request.setAttribute("oldman", true);
 			msg.setError("非新生身份請至註冊單位辦理");
 			savMessage(msg);
 			return SUCCESS;			

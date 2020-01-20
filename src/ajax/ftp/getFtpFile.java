@@ -32,7 +32,7 @@ public class getFtpFile extends BaseAction {
 	}
 
 	public InputStream getInStream() throws IOException {	
-		System.out.println("work???");
+		//System.out.println("work???");
 		String file=request.getParameter("file");
 		String path=request.getParameter("path");		
 		String host=((Map)getContext().getAttribute("FtpMain")).get("host_runtime").toString();

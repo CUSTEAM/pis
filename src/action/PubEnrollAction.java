@@ -26,11 +26,10 @@ public class PubEnrollAction extends BaseAction{
 	grad_dept,parent_name,parent_phone,telephone,CellPhone,perm_post,perm_addr,Email,dis,low;
 	
 	
-	SimpleDateFormat sf=new SimpleDateFormat("yyyy-MM-dd");
-	String now=sf.format(new Date());
-	public String execute(){
-		
-		System.out.println("wellcome");
+	
+	public String execute(){		
+		SimpleDateFormat sf=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		String now=sf.format(new Date());
 		List<Map>list=df.sqlGet("SELECT e.sign_begin, e.sign_end, cc.name as "
 		+ "CampusName, cs.name as SchoolName, e.enroll_name FROM Enroll e, Enroll_dept d, "
 		+ "CODE_SCHOOL cs, CODE_CAMPUS cc WHERE cc.id=d.CampusNo AND cs.id=d.SchoolNo AND "
@@ -76,33 +75,79 @@ public class PubEnrollAction extends BaseAction{
 		}else{
 			EnrollStmd std=new EnrollStmd();
 			std.setIdno(logidno);
+			SimpleDateFormat sf=new SimpleDateFormat("yyyy-MM-dd");
+			//String now=sf.format(new Date());
 			std.setBirthday(sf.parse(logbirthday));
 			std.setStudentName("");
 			df.update(std);
 			request.setAttribute("std", std);
-		}
-		
+		}		
+		request.setAttribute("enrolls", getDepts());
+		return SUCCESS;
+	}
+	
+	private boolean checkDepts(){
+		if(CellPhone.equals(""))return false;
+		if(curr_addr.equals(""))return false;
+		if(student_name.equals(""))return false;
+		if(depts!=null){
+			for(int i=0; i<depts.length; i++){			
+				if(!depts[i].equals(""))return true;			
+			}
+		}		
+		return false;
+	}
+	
+	private List getDepts(){		
 		//可報名
+		SimpleDateFormat sf=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		String now=sf.format(new Date());
 		List<Map>list=df.sqlGet("SELECT e.subsel,d.CampusNo,d.SchoolNo, e.*, cc.name as CampusName, cs.name as SchoolName, "
 		+ "e.enroll_name FROM Enroll e, Enroll_dept d, CODE_SCHOOL cs, "
 		+ "CODE_CAMPUS cc WHERE cc.id=d.CampusNo AND cs.id=d.SchoolNo AND "
 		+ "e.Oid=d.Enroll_oid AND e.sign_begin<='"+now+"'AND "
 		+ "e.sign_end>='"+now+"'GROUP BY d.CampusNo, d.SchoolNo ORDER BY e.sign_end");
-		
 		for(int i=0; i<list.size(); i++){			
 			list.get(i).put("depts", df.sqlGet("SELECT ed.* FROM Enroll_dept ed, Enroll e WHERE e.Oid=ed.Enroll_oid AND e.Oid="+list.get(i).get("Oid")+" AND ed.CampusNo='"+list.get(i).get("CampusNo")+"'AND ed.SchoolNo='"+list.get(i).get("SchoolNo")+"'"));
 			list.get(i).put("attachs", df.sqlGet("SELECT * FROM Enroll_attach WHERE Enroll_oid="+list.get(i).get("Oid")));
 		}
-		
-		request.setAttribute("enrolls", list);
-		return SUCCESS;
+		return list;
 	}
 	
-	public String save(){
+	public String save() throws ParseException{	
 		EnrollRegist er;
 		EnrollStmd s;
 		EnrollRegistDept erd;
-		EnrollRegistHist erh;		
+		EnrollRegistHist erh;
+		
+		s=(EnrollStmd) df.hqlGetListBy("FROM EnrollStmd WHERE idno='"+idno+"'").get(0);
+		s.setStudentName(student_name);		
+		s.setCurrPost(curr_post);
+		s.setCurrAddr(curr_addr);
+		s.setSchlName(schl_name);
+		s.setGradDept(grad_dept);
+		s.setCellPhone(CellPhone);
+		s.setTelephone(telephone);
+		s.setPermPost(perm_post);
+		s.setPermAddr(perm_addr);
+		s.setEmail(Email);
+		s.setDis(dis);
+		s.setLow(low);		
+		df.update(s);
+		
+		Message msg=new Message();
+		if(!checkDepts()){
+			DetachedCriteria c = DetachedCriteria.forClass(EnrollStmd.class);
+			c.add(Restrictions.eq("idno", idno));
+			//c.add(Restrictions.eq("birthday", sf.parse(logbirthday)));		
+			List<EnrollStmd>stds=df.getHibernateDAO().getHibernateTemplate().findByCriteria(c);
+			request.setAttribute("std", stds.get(0));			
+			request.setAttribute("enrolls", getDepts());	
+			msg.setMsg("資料不完整, 請逐一檢查各步驟紅色欄位");
+			this.savMessage(msg);
+			
+			return SUCCESS;
+		}
 		
 		df.exSql("DELETE FROM Enroll_regist WHERE idno='"+idno+"'");
 		er=new EnrollRegist();
@@ -122,40 +167,8 @@ public class PubEnrollAction extends BaseAction{
 		}
 		
 		
-		s=(EnrollStmd) df.hqlGetListBy("FROM EnrollStmd WHERE idno='"+idno+"'").get(0);
-		s.setStudentName(student_name);		
-		s.setCurrPost(curr_post);
-		s.setCurrAddr(curr_addr);
-		s.setSchlName(schl_name);
-		s.setGradDept(grad_dept);
-		s.setCellPhone(CellPhone);
-		s.setTelephone(telephone);
-		s.setPermPost(perm_post);
-		s.setPermAddr(perm_addr);
-		s.setEmail(Email);
-		s.setDis(dis);
-		s.setLow(low);		
-		df.update(s);
-		
-		/*if(!dis.equals("")){
-			erh=new EnrollRegistHist();
-			erh.setEdate(new Timestamp(new Date().getTime()));
-			erh.setEnrollRegistOid(er.getOid());
-			erh.setNote("持有身心障礙證明");
-			df.update(erh);
-		}
-		
-		if(!low.equals("")){
-			erh=new EnrollRegistHist();
-			erh.setEdate(new Timestamp(new Date().getTime()));
-			erh.setEnrollRegistOid(er.getOid());
-			erh.setNote("持有低收入戶證明");
-			df.update(erh);
-		}*/
-		
-		
 		Map m=getReg(idno);
-		Message msg=new Message();
+		
 		msg.setMsg("報名完成");
 		this.savMessage(msg);
 		request.setAttribute("oStd", m);
@@ -165,22 +178,33 @@ public class PubEnrollAction extends BaseAction{
 		//return SUCCESS;
 	}
 	
-	private Map getReg(String idno){
+	private Map getReg(String idno) throws ParseException{
 		
-		//List<Map>st=df.sqlGet("");
 		Map reg=df.sqlGetMap("SELECT * FROM Enroll_regist WHERE idno='"+idno+"'");
-		
+		Map enroll;
 		if(reg!=null){
-			reg.put("enroll", df.sqlGetMap("SELECT * FROM Enroll WHERE Oid="+reg.get("Oid")));
+			enroll=df.sqlGetMap("SELECT * FROM Enroll WHERE Oid="+reg.get("Enroll_oid"));
+			reg.put("enroll", enroll);				
+			reg.put("reg", df.sqlGetMap("SELECT * FROM Enroll_regist WHERE idno='"+idno+"'"));			
 			
-			//reg.put("std", df.sqlGetMap("SELECT * FROM Enroll_stmd WHERE idno='"+idno+"'"));
-			reg.put("reg", df.sqlGetMap("SELECT * FROM Enroll_regist WHERE idno='"+idno+"'"));
+			
+			SimpleDateFormat sf=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+			Long now=new Date().getTime();
+			if(now>=sf.parse(enroll.get("open_match").toString()).getTime()){				
+				request.setAttribute("o_match", true);
+			}else{
+				request.setAttribute("o_match", false);
+			}
+			if(now>=sf.parse(enroll.get("open_score").toString()).getTime()){				
+				request.setAttribute("o_score", true);
+			}else{
+				request.setAttribute("o_score", false);
+			}			
+			
 			reg.put("dept", df.sqlGet("SELECT cs.name as SchoolName, cc.name as CampusName, cd.name as DeptName, d.dept_name, "
 			+ "erd.choice, erd.rank FROM Enroll_regist_dept erd, Enroll_dept d, CODE_CAMPUS cc, CODE_SCHOOL cs, "
 			+ "CODE_DEPT cd WHERE cs.id=d.SchoolNo AND cd.id=d.DeptNo AND cc.id=d.CampusNo AND d.Oid=erd.Enroll_dept_oid "
 			+ "AND erd.idno='"+idno+"' ORDER BY erd.choice"));
-			
-			//reg.put("hist", df.sqlGet("SELECT * FROM Enroll_regist_hist eh WHERE eh.Enroll_regist_oid="+reg.get("Oid")));
 			
 			reg.put("atta", df.sqlGet("SELECT ea.Oid as eOid, ea.attach_name, ea.online, era.* FROM Enroll_attach ea "
 			+ "LEFT OUTER JOIN Enroll_regist_attach era ON ea.Oid=era.Enroll_attach_oid AND "

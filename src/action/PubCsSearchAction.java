@@ -163,42 +163,43 @@ public class PubCsSearchAction extends BaseAction{
 	}
 	
 	private List getSavedtimes(){
+		//if(year.trim().equals(""))year=getContext().getAttribute("school_year");
 		StringBuilder depart_class=new StringBuilder();
-		if(!cno.equals("")){depart_class.append(cno);}else{depart_class.append("_");}
-		if(!sno.equals("")){depart_class.append(sno);}else{depart_class.append("__");}
-		if(!dno.equals("")){depart_class.append(dno);}else{depart_class.append("_");}
-		if(!gno.equals("")){depart_class.append(gno);}else{depart_class.append("_");}
-		if(!zno.equals("")){depart_class.append(zno);}else{depart_class.append("_");}
 		
-		StringBuilder sql=new StringBuilder("SELECT e.Oid as emplOid, d.school_year, cdo.name as optName,cl.ClassName, e.cname, c.chi_name, d.Oid, d.credit, d.opt, " +
-				"d.thour, d.stu_select, d.techid, d.school_term, cl.ClassNo FROM CODE_DTIME_OPT cdo," +
-				"((Savedtime d LEFT OUTER JOIN empl e ON d.techid=e.idno) " +
-				"LEFT OUTER JOIN Dtime_class dc ON d.Oid=dc.Dtime_oid), Csno c, Class cl " +
-				"WHERE cdo.id=d.opt AND cl.ClassNo=d.depart_class AND d.cscode=c.cscode AND d.school_term='"+term+"'AND d.school_year='"+year+"'");
-				if(!depart_class.equals("")){sql.append("AND d.depart_class LIKE'"+depart_class+"%' ");}
+		
+		StringBuilder sql=new StringBuilder("SELECT d.techid, d.school_year, cdo.name as optName,cl.ClassName, e.cname, c.chi_name,"
+				+ "d.Oid, d.credit, d.opt, d.thour, d.stu_select, d.techid, d.school_term, cl.ClassNo FROM CODE_DTIME_OPT cdo,"
+				+ "Savedtime d LEFT OUTER JOIN empl e ON d.techid=e.idno, Csno c, Class cl WHERE "
+				+ "cdo.id=d.opt AND cl.ClassNo=d.depart_class AND d.cscode=c.cscode AND d.school_term='"+term+"'AND d.school_year='"+year+"'AND cl.CampusNo='"+cno+"'");
+		if(!sno.equals(""))sql.append("AND cl.SchoolNo='"+sno+"'");
+		if(!dno.equals(""))sql.append("AND cl.DeptNo='"+dno+"'");
+		if(!gno.equals(""))sql.append("AND cl.Grade='"+gno+"'");
+		if(!zno.equals(""))sql.append("AND cl.SeqNo='"+zno+"'");
+		
+		
+		//if(!depart_class.equals("")){sql.append("AND d.depart_class LIKE'"+depart_class+"%' ");}
 				
 				//課程名稱是否模糊搜尋
-				if(cscode.indexOf(",")<0){
-					sql.append("AND c.chi_name LIKE '%"+cscode+"%' ");
-				}else{
-					cscode=cscode.substring(0, cscode.indexOf(","));
-					sql.append("AND c.cscode = '"+cscode+"' ");
-				}
+		if(cscode.trim().length()>0)
+		if(cscode.indexOf(",")<0){
+			sql.append("AND c.chi_name LIKE '%"+cscode+"%' ");
+		}else{
+			cscode=cscode.substring(0, cscode.indexOf(","));
+			sql.append("AND c.cscode = '"+cscode+"' ");
+		}
 				
-				//教師
-				if(!techid.equals("")){
-					if(techid.indexOf(",")>-1){
-						sql.append("AND e.cname ='"+techid.substring(0, techid.indexOf(","))+"' ");
-					}else{
-						sql.append("AND e.cname ='"+techid+"' ");
-					}
-					
-					
-				}				
-				sql.append(" GROUP BY d.Oid ORDER BY cl.ClassNo");
-				
-		//return sortOut(df.sqlGet(sql.toString()));
-		return sortOut(df.sqlGet(sql.toString()), false);
+		//教師
+		if(!techid.equals("")){
+			if(techid.indexOf(",")>-1){
+				sql.append("AND e.idno ='"+df.sqlGetStr("SELECT idno FROM empl WHERE Oid="+techid.substring(0, techid.indexOf(",")))+"' ");
+			}
+			
+			
+		}				
+		sql.append("ORDER BY cl.ClassNo");
+		//System.out.println(sql);
+		return df.sqlGet(sql.toString());
+		//return sortOut(df.sqlGet(sql.toString()), false);
 	}
 	
 	private List sortOut(List<Map>list, boolean thisTerm){

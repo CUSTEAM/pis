@@ -8,6 +8,15 @@
 		<action name="parentSuggestion" class="ajax.parentSuggestion">
 			<result type="json"/>
 		</action>
+		<!-- 獨招報名 -->
+		<action name="EnrollDoc" class="ajax.pub.EnrollDoc">
+			<result name="success">null</result>
+		</action>
+		
+		<!-- 獨招信封 -->
+		<action name="EnrollEnvelope" class="ajax.pub.EnrollEnvelope">
+			<result name="success">null</result>
+		</action>
 		
 		
 		<!-- 家長代表手機登入 -->

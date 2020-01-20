@@ -10,6 +10,12 @@
 <script src="/eis/inc/js/plugin/jquery-ui.js"></script>
 <script src="/eis/inc/js/plugin/bootstrap-tooltip.js"></script>
 <link href="/eis/inc/css/jquery-ui.css" rel="stylesheet" />
+
+
+<script src="/eis/inc/js/plugin/ChartJS/Chart2.6.min.js"></script>
+<script src="/eis/inc/js/plugin/ChartJS/Chart2.6.BgColor.js"></script>
+<script src="/eis/inc/js/plugin/ChartJS/Chart2.6.LnColor.js"></script>
+
 <script>
 $.ajaxSetup ({cache: false});
 $(document).ready(function() {
@@ -19,31 +25,8 @@ $(document).ready(function() {
 });
 </script>
 </head>
-<body data-spy="scroll" data-target="#navbarExample" data-offset="0">
-<div id="navbarExample" class="navbar navbar-fixed-top">
-	<div class="navbar-inner">
-		<div class="container" style="width: auto;">
-			<a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-responsive-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                  </a>
-			<a class="brand" href="http://john.cust.edu.tw/pis/Parent#fat">&nbsp;&nbsp;中華科技大學</a>
-			<c:if test="${!empty std}">
-			<div class="nav-collapse collapse navbar-responsive-collapse">
-				<ul class="nav">
-					<li><a href="#csTable">本學期課表</a></li>
-					<li><a href="#dilg">缺曠記錄</a></li>
-					<li><a href="#score">歷年成績</a></li>
-					<li><a href="#desd">獎懲記錄</a></li>
-					<!-- li><a href="#care">輔導記錄</a></li-->
-					<li><a href="#contact">與導師連繫</a></li>
-				</ul>
-			</div>
-			</c:if>
-		</div>
-	</div>
-</div>
+<body>
+
 
 <c:if test="${empty std}">
 <%@ include file="Parent/login.jsp"%>
@@ -95,8 +78,8 @@ $(document).ready(function() {
 <input type="hidden" id="dilgTag" value="" />
 
 <div class="row">
-	<div class="span6"><div id="dilgChart" style="width:auto; height:300px"></div></div>
-	<div class="span6"><div id="dilgChart1" style="width:100%; height:300px"></div></div>
+	<!-- div class="span6"><div id="dilgChart" style="width:auto; height:300px"></div></div-->
+	<!-- div class="span6"><div id="dilgChart1" style="width:100%; height:300px"></div></div-->
 </div>
 <table class="table" id="dilgTable"></table> 
               

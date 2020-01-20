@@ -105,7 +105,7 @@ public class putEnrollFtpFile extends BaseAction {
 			
 			a.setEnrollAttachOid(Integer.parseInt(request.getParameter("eOid")));
 			a.setEnrollRegistOid(Integer.parseInt(request.getParameter("erOid")));
-			a.setPath("enroll/"+newFileName);
+			a.setPath(newFileName);
 			df.update(a);
 		}catch(Exception e){
 			e.printStackTrace();				

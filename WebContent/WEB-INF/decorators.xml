@@ -16,6 +16,7 @@
 	
 	<excludes>  
        <pattern>/jsp/decorators/*</pattern>
+       <pattern>/PunchCard</pattern>
        <pattern>/inc/*</pattern>
        <pattern>/StdProfileEdit</pattern>
        <pattern>/PubEnroll</pattern>

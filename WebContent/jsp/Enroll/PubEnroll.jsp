@@ -124,50 +124,45 @@
                 <li><a href="#step-5">報名步驟 5<br /><small>完成報名</small></a></li>
             </ul>
             </c:if>
-
             <div>
                 <div id="step-1" style="margin-top:20px;">                   
                     <div class="row">	                          
-	                <div class="col-lg-12">
+	                <div class="col-sm-12">
 						<c:if test="${empty std}">
 						<%@ include file="login.jsp"%>
 						</c:if>						
-						<c:if test="${!empty std}">
-                        
+						<c:if test="${!empty std}">                        
                         <div class="row control-group has-float-label">
 						<div class="form-group col-xs-12 floating-label-form-group controls">
 						報考項目
 	                    <select onChange="showSchooList(this.value)" id="enroll1" class="form-control form-select">
                         	<option value="">選擇報名部制與學制</option>
                         	<c:forEach items="${enrolls}" var="e">
-                        	<option value="${e.CampusNo}${e.SchoolNo}">${e.CampusName}${e.SchoolName}</option>
+                        	<option value="${e.CampusNo}${e.SchoolNo}">${e.CampusName}${e.SchoolName} - ${e.enroll_name}</option>
                         	</c:forEach>
                        	</select>
 		                <p class="help-block text-danger"></p>
 		                </div>
 						</div>                        
-                        <div id="mchose1">
-                        
+                        <div id="mchose1">                        
                         </div>                       
-					</c:if>
-											
+					</c:if>											
 					</div>					            
             	</div>
                 
-                </div>                
+                </div>
                 <div id="step-2" style="margin-top:20px;">
-                    <%@ include file="profile.jsp"%>
-                    
-                </div> 
+				<%@ include file="profile.jsp"%>
+                </div>
                 <div id="step-3" class="">
-                      <%@ include file="education.jsp"%>
-                </div>                
+				<%@ include file="education.jsp"%>
+                </div>
                 <div id="step-4" class="">
-                      
-                </div>                
+                <h2>需準備的文件 <small>於報名完成後提供電子檔上傳</small></h2>                    
+                <div id="step-4_content"></div>
+                </div>
                 <div id="step-5" class="">
-                    <h2>Step 4 Content</h2>                    
-                    <%@ include file="confirm.jsp"%>                    
+                <%@ include file="confirm.jsp"%>
                 </div> 
             </div>
         </div>
@@ -189,7 +184,14 @@
 <c:forEach items="${enrolls}" var="e">
 <div id="a${e.CampusNo}${e.SchoolNo}">
 <ul class="list-group">
-<c:forEach items="${e.attachs}" var="a"><li class="list-group-item">${a.attach_name}<div style="float:right;"><button disabled="disabled"class="btn btn-default ">不可線上補件</button></div></li></c:forEach>
+<c:forEach items="${e.attachs}" var="a">
+<li class="list-group-item">${a.attach_name}<div style="float:right;">
+<c:if test="${!empty a.online}"><button disabled="disabled"class="btn btn-default "><span class="glyphicon glyphicon-cloud-upload"> 允許提供電子檔</span></button></c:if>
+<c:if test="${empty a.online}"><button disabled="disabled"class="btn btn-danger "><span class="glyphicon glyphicon-alert"> 不可提供電子檔</span></button></c:if>
+</div></li>
+
+
+</c:forEach>
 </ul>
 </div>
 </c:forEach>
@@ -312,8 +314,8 @@ function showSchooList(sno){
 	$("#mchose").html("");
 	$("#mchose").html($("#c"+sno).html());	
 	
-	$("#step-4").html("");
-	$("#step-4").html($("#a"+sno).html());
+	$("#step-4_content").html("");
+	$("#step-4_content").html($("#a"+sno).html());
 }
 
 function cp(n){
