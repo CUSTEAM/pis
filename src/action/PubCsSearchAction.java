@@ -76,13 +76,14 @@ public class PubCsSearchAction extends BaseAction{
 	
 	private List getDtimeClass(String school_year){
 		try{
+			
 			return sortOut(df.sqlGet("SELECT e.Oid as emplOid, '"+school_year+"' as school_year, cdo.name as optName, (SELECT COUNT(*)FROM stmd, Seld WHERE "
 					+ "stmd.student_no=Seld.student_no AND Seld.Dtime_oid=d.Oid AND stmd.sex='1') as bsed, (SELECT COUNT(*)FROM "
 					+ "stmd, Seld WHERE stmd.student_no=Seld.student_no AND Seld.Dtime_oid=d.Oid AND stmd.sex='2') as gsed,cl.ClassName,"
 					+ "e.cname, c.chi_name, d.Oid, d.credit, d.opt, d.open, d.thour, d.elearning, d.stu_select,"
 					+ "d.techid, d.Sterm as school_term, cl.ClassNo FROM CODE_DTIME_OPT cdo,((Dtime d LEFT OUTER JOIN empl e ON d.techid=e.idno) "
 					+ "LEFT OUTER JOIN Dtime_class dc ON d.Oid=dc.Dtime_oid), Csno c, Class cl WHERE cdo.id=d.opt AND d.cscode=c.cscode AND "
-					+ "d.Sterm='1'AND d.depart_class=cl.ClassNo AND d.Oid IN(SELECT Dtime_oid FROM Dtime_class WHERE place='"+place.substring(0, place.indexOf(","))+"')"
+					+ "d.Sterm='"+this.term+"'AND d.depart_class=cl.ClassNo AND d.Oid IN(SELECT Dtime_oid FROM Dtime_class WHERE place='"+place.substring(0, place.indexOf(","))+"')"
 					+ "GROUP BY d.Oid ORDER BY d.Sterm"), true);
 		}catch(Exception e){
 			return null;
