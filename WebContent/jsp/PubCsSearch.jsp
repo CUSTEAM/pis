@@ -50,10 +50,21 @@ $(document).ready(function() {
     			autocomplete="off" />
 				<span class="input-group-addon">學年</span>
 		</div>
+		
+		<c:if test="${school_term eq'1'}">
 		<select name="term" id="term" class="form-control">
 			<option <c:if test="${term eq'1'}">selected</c:if> value="1">上學期</option>
 			<option <c:if test="${term eq'2'}">selected</c:if> value="2">下學期</option>
-		</select>	
+		</select>
+		</c:if>
+		
+		<c:if test="${school_term eq'2'}">
+		<select name="term" id="term" class="form-control">
+			<option <c:if test="${term eq'2'}">selected</c:if> value="2">下學期</option>
+			<option <c:if test="${term eq'1'}">selected</c:if> value="1">上學期</option>
+			
+		</select>
+		</c:if>	
 		
 		<%@ include file="/inc/jsp-kit/classSelector.jsp"%></td>
 	</tr>
