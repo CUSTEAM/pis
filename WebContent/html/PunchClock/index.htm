@@ -1,0 +1,400 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" type="image/x-icon" href="inc/icon.ico" />
+    <link rel="mask-icon" type="" href="inc/svg.svg" color="#111" />
+    <title>Punch Clock</title>
+    <link rel="stylesheet" href="css/normalize.min.css">
+    <link rel='stylesheet' href='css/css.css'>
+    <link rel='stylesheet' href='css/bootstrap.min.css'>
+
+
+
+    <style>
+              
+
+              html, body {
+                  height: 100%;
+              }
+
+              body {
+                  background: #0f3854;
+                  background: radial-gradient(ellipse at center, #0a2e38 0%, #000000 70%);
+                  background-size: 100%;
+              }
+
+              p {
+                  margin: 0;
+                  padding: 0;
+              }
+
+              #clock {
+                  font-family: 'Share Tech Mono', monospace;
+                  color: #ffffff;
+                  text-align: center;
+                  position: absolute;
+                  left: 50%;
+                  top: 50%;
+                  -webkit-transform: translate(-50%, -50%);
+                  transform: translate(-50%, -50%);
+                  color: #daf6ff;
+                  text-shadow: 0 0 20px #0aafe6, 0 0 20px rgba(10, 175, 230, 0);
+              }
+
+                  #clock .time {
+                      letter-spacing: 0.05em;
+                      font-size: 80px;
+                      padding: 5px 0;
+                  }
+
+                  #clock .date {
+                      letter-spacing: 0.1em;
+                      font-size: 24px;
+                      font-family: 'Microsoft JhengHei';
+                  }
+
+                  #clock .text {
+                      letter-spacing: 0.1em;
+                      font-size: 20px;
+                      padding: 20px 0 0;
+                      font-family: 'Microsoft JhengHei';
+                  }
+
+
+
+
+
+              .inputext {
+                  position: relative;                  
+                  top: -100px;
+                    left: -100px;     
+              }
+
+
+
+
+
+
+       .alert-minimalist {
+	background-color: rgb(241, 242, 240);
+	border-color: rgba(149, 149, 149, 0.3);
+	border-radius: 3px;
+	color: rgb(149, 149, 149);
+	padding: 10px;
+}
+.alert-minimalist > [data-notify="icon"] {
+	height: 50px;
+	margin-right: 12px;
+}
+.alert-minimalist > [data-notify="title"] {
+	color: rgb(51, 51, 51);
+	display: block;
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+.alert-minimalist > [data-notify="message"] {
+	font-size: 80%;
+}      
+    </style>
+    <script>
+        window.console = window.console || function (t) {
+        };
+    </script>
+    <script>
+
+        if (document.location.search.match(/type=embed/gi)) {
+            window.parent.postMessage("resize", "*");
+        }
+    </script>
+</head>
+<body translate="no">
+    <div id="clock">
+        <p class="date">{{ date }}</p>
+        <p class="time">{{ time }}</p>
+        <p class="text">中華科技大學</p>
+    </div>
+
+
+
+
+
+
+    <script src='js/vue.js'></script>
+    <script id="rendered-js">
+        var clock = new Vue({
+            el: '#clock',
+            data: {
+                time: '',
+                date: ''
+            }
+        });
+
+        var week = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+        var timerID = setInterval(updateTime, 1000);
+        updateTime();
+        function updateTime() {
+            var cd = new Date();
+            clock.time = zeroPadding(cd.getHours(), 2) + ':'
+                + zeroPadding(cd.getMinutes(), 2) + ':'
+                + zeroPadding(cd.getSeconds(), 2);
+            clock.date = zeroPadding(cd.getFullYear(), 4) + '-'
+                + zeroPadding(cd.getMonth() + 1, 2) + '-'
+                + zeroPadding(cd.getDate(), 2) + ' ' + week[cd.getDay()];
+        };
+
+        function zeroPadding(num, digit) {
+            var zero = '';
+            for (var i = 0; i < digit; i++) {
+                zero += '0';
+            }
+            return (zero + num).slice(-digit);
+        }
+    </script>
+
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-notify.min.js"></script>
+
+
+    <div class="inputext">
+        <input type="text" id="cardNo" name="cardNo" />
+    </div>
+    <script>
+        $("#cardNo").focus();
+
+
+        $(function () {
+            function show() {
+                $("#cardNo").focus();
+            }
+            setInterval(show, 500);// 注意函数名没有引号和括弧！
+
+
+
+        });
+
+        var url = "http://ap.cust.edu.tw/CIS/CardReaderSimple";
+        var forder = "C:\\custduty\\";
+        var cname, day, info, idno, now;
+
+        $("#cardNo").keydown(function (event) {
+
+            var cardNo = $("#cardNo").val();
+
+            if (event.which == 13) {
+
+
+
+
+                setTime();
+                var time = new Array(5);
+                writeToFile(cardNo, day, now);
+                $.ajax({
+
+                    newest_on_top: true,
+                    url: "http://ap.cust.edu.tw/CIS/CardReaderSimple",
+                    type: "GET",
+                    dataType: "xml",//資料型態可以不設定，且此型態不可是text或html
+                    data: { CardNo: cardNo, day: day, time: now },
+                    timeout: 1000,
+                    error: function (xml) {
+
+
+
+                        var notify = $.notify('<strong>連線中</strong> 卡號: ' + cardNo + ', 時間:' + day + " " + now + ', 傳送中...', {
+                            newest_on_top: true,
+                            allow_dismiss: false,
+                            showProgressbar: true
+                        });
+
+                        setTimeout(function () {
+                            notify.update({ 'type': 'warning', 'message': '<strong>重新連線中</strong> 卡號: ' + cardNo + ', 時間:' + day + " " + now + ', 重新傳送中...', 'progress': 25 });
+                        }, 2500);
+
+
+                        setTimeout(function () {
+                            notify.update({ 'type': 'danger', 'message': '<strong>網路異常</strong> 資料已儲存於此電腦，電腦於網路恢復後重新傳送', 'progress': 25 });
+                        }, 4500);
+
+
+
+
+                    },
+                    success: function (xml) {
+                        $(xml).find("pront").each(function (i) {
+
+                            idno = $(this).children("idno").text();
+                            cname = $(this).children("cname").text(); //取得子節點中的src資料
+                            day = $(this).children("day").text(); //取得子節點中的url資料
+                            info = $(this).children("info").text(); //取得子節點中的url資料
+
+
+                            //alert(cname+"|"+day+"|"+info); //秀出總筆數與xml檔與抓到的欄位
+                            $(xml).find('time').each(function (j, v) {
+
+                                time[j] = $(v).text();
+                                //alert("time"+j+":"+time[j]);
+
+                            });
+
+                        })
+
+
+
+
+
+
+                        
+
+
+
+
+
+
+
+                        var notify = $.notify({
+
+                            allow_dismiss: false,
+                            icon: 'http://ap.cust.edu.tw/CIS/Personnel/getFTPhoto4Empl?idno=' + idno,
+                            title: '即時訊息',
+                            message: day + time[0] + " "
+
+                        }, {
+                                // settings
+                                newest_on_top: true,
+                                //allow_dismiss: false,
+                                type: 'minimalist',
+                                //progress: 25,
+                                //showProgressbar: true,
+                                delay: 3000,
+                                icon_type: 'image',
+
+
+                                template: '<div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">' +
+                                    '<img data-notify="icon" class="img-circle pull-left">' +
+                                    '<span data-notify="title">' + cname + '</span>' +
+                                    '<span data-notify="message">現在時間 ' + day + " " + time[0] + '</span><br>' +
+                                    '<span data-notify="message">' + time[1] + '</span><br>' +
+                                    '<span data-notify="message">' + time[2] + '</span><br>' +
+                                    '<span data-notify="message">' + time[3] + '</span><br>' +
+                                    '<span data-notify="message">' + time[4] + '</span><br>' +
+                                    '</div>'
+
+
+
+                            });
+
+
+
+
+
+
+
+
+
+                    }
+                });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                $("#cardNo").val("");
+
+
+            }
+        });
+
+
+        //寫1筆資料
+        function writeToFile(CardNo, date, now) {
+
+            filename = date + ".csv";
+            output_filename = forder + filename;
+
+            var fso;
+            var way = 8;
+            fso = new ActiveXObject("Scripting.FileSystemObject");
+            var output_stream;
+
+            if (!fso.FolderExists(forder)) {
+                fso.CreateFolder(forder)
+            }
+
+            if (fso.FileExists(output_filename)) {
+                output_stream = fso.GetFile(output_filename).OpenAsTextStream(way);
+                output_stream.WriteLine(CardNo + "," + date + "," + now); //寫入
+                output_stream.close();
+            } else {
+                //建立再寫入
+                output_stream = fso.CreateTextFile(output_filename, true);//建立
+                output_stream.WriteLine(CardNo + "," + date + "," + now); //寫入
+                output_stream.Close();
+            }
+
+        }
+
+
+
+        function setTime() {
+            var dateObj = new Date();
+            var YY = dateObj.getFullYear();
+            var MM = dateObj.getMonth() + 1;
+            if (MM < 10) MM = "0" + MM;
+            var DD = dateObj.getDate();
+            if (DD < 10) DD = "0" + DD;
+
+            //var d=dateObj.getDay()
+            var h = dateObj.getHours();
+            var m = dateObj.getMinutes();
+            var s = dateObj.getSeconds();
+            day = YY + "-" + MM + "-" + DD
+            now = h + ":" + m + ":" + s
+
+            //var CYY=YY-1911;
+
+            //dayValue =YY+"-"+MM+"-"+DD;
+            //CdayValue=CYY+"撟�"+MM+"��";
+            //CdayValue=MM+"��";
+            //dayValue=DD;
+            //weekValue="���"+getWeek(d);
+
+            //timeMode =( h>= 12) ? "銝见�" : "銝𠰴� ";
+            //timeValue = ((h > 12) ? h - 12 : h) + " 暺�";
+            //timeValue += ((m < 10) ? " 0" : " ") + m + " ��";
+            //timeValue += ((s < 10) ? " 0" : " ") + s + " 蝘�";
+
+            //document.all.pane.innerHTML=CdayValue+timeValue ;
+
+
+            //document.getElementById("CTimeMode").innerHTML=timeMode;
+            //document.getElementById("CDate").innerHTML=CdayValue;
+            //document.getElementById("CTime").innerHTML=timeValue;
+            //document.getElementById("Cday").innerHTML=DD+"��";
+            //document.getElementById("week").innerHTML=weekValue;
+
+            //document.getElementById("day").value=YY+"-"+MM+"-"+DD;
+            //document.getElementById("time").value=h+":"+m+":"+s;
+
+
+            //document.form1.CardNo.focus();//甇訾�
+        }
+
+    </script>
+</body>
+</html>
