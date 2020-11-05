@@ -28,6 +28,11 @@
 			<result name="view">jsp/Enroll/View.jsp</result>
 		</action>
 		
+		<!-- 新生2-->			
+		<action name="Counselor" class="action.CounselorAction">
+			<result>jsp/counselor/Counselor.jsp</result>
+		</action>
+		
 		<!-- 課程 -->
 		<action name="PubCsSearch" class="action.PubCsSearchAction">
 			<result>jsp/PubCsSearch.jsp</result>
