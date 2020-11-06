@@ -71,7 +71,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							</div>
 							
 							<div class="styled-input">
-								<input type="text" name="note" required="" value="${note}">
+								<input type="text" name="note" value="${note}">
 								<label>附註</label>
 								<span></span>
 							</div>
