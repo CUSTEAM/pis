@@ -23,6 +23,12 @@
 			service.listener.ContextSetupListener
 		</listener-class>
 	</listener>
+	
+	<!-- listener>
+		<listener-class>
+			service.listener.PISContextSetupListener
+		</listener-class>
+	</listener-->
 
 	<filter>
 		<filter-name>sitemesh</filter-name>
