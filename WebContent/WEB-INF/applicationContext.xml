@@ -41,6 +41,9 @@
 				<value>model/EnrollRegistHist.hbm.xml</value>
 				<value>model/EnrollStmd.hbm.xml</value>
             	<value>model/Stmd.hbm.xml</value>
+            	<value>model/Mail.hbm.xml</value>
+            	<value>model/MailReceiver.hbm.xml</value>
+            	<value>model/MailAttache.hbm.xml</value>
             </list>
         </property>
     </bean>
