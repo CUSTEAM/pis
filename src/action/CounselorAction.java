@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import model.Mail;
+import model.MailReceiver;
 import model.Message;
 
 public class CounselorAction extends BaseAction{
@@ -69,6 +71,46 @@ public class CounselorAction extends BaseAction{
 		try {
 			df.exSql("INSERT INTO Counselor_stmd(student_name,cell_phone,DeptNo,SchoolNo,note)VALUES('"+student_name+"','"+cell_phone+"','"+DeptNo+"','"+SchoolNo+"','"+note+"')");
 			msg.setMsg("咨詢發送成功，專人將儘快與您連繫");
+			
+			
+			
+			
+			
+			try {
+				List<Map>u=df.sqlGet("SELECT e.cname, e.Email, c.* FROM Counselor_charge c, empl e WHERE c.idno=e.idno AND c.DeptNo='"+DeptNo+"'");
+				Mail m=new Mail();		
+				
+				m.setContent("各位好:<br>"+student_name+"同學寄送了預約報名，請登資訊系統右上角點選「意見反應單 → 招生預約管理」進行連繫。");
+				m.setFrom_addr("CIS@cc.cust.edu.tw");
+				m.setSender("中華科技大學資訊系統");
+				m.setSubject("預約報名通知");
+				m.setSend("0");			
+				df.update(m);
+				
+				MailReceiver r=new MailReceiver();
+				for(int i=0; i<u.size(); i++) {
+					r.setMail_oid(m.getOid());
+					r.setAddr(u.get(i).get("Email").toString());
+					r.setName(u.get(i).get("cname").toString());
+					r.setType("to");									
+					df.update(r);
+				}
+				
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 		}catch(Exception e) {
 			e.printStackTrace();
 			msg.setMsg("咨詢發送不成功，請檢查必要欄位和內容");
