@@ -32,8 +32,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="logo">
 					<a href="#"><span class="fa fa-graduation-cap" aria-hidden="true"></span></a>
 				</div>
-				<h1>中華科技大學 報名咨詢</h1>
-				<p>有關考試資訊、課程介紹、最新優惠方案或課程購買報名歡迎填單，我們會儘速與您聯繫！ </p>
+				<h1>中華科技大學 報名預約</h1>
+				<p>有關考試資訊、課程介紹、最新升學管道與報名資訊歡迎填單，我們會儘速與您聯繫！ </p>
 				<!-- div class="content3">
 					<ul>
 						<li><a class="" href="www.cust.edu.tw"> 更多系所資訊</a></li>

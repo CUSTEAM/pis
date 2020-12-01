@@ -62,8 +62,8 @@ public class CounselorAction extends BaseAction{
 	
 	public String confirm() {
 		Message msg=new Message();
-		if(df.sqlGetInt("SELECT COUNT(*)FROM Counselor_stmd WHERE cell_phone='"+cell_phone+"'AND DeptNo='"+DeptNo+"'AND SchoolNo='"+SchoolNo+"'AND reply IS NULL")>0) {
-			msg.setMsg("該系所正由專人準備與您連繫..");
+		if(df.sqlGetInt("SELECT COUNT(*)FROM Counselor_stmd WHERE cell_phone='"+cell_phone+"'AND reply IS NULL")>0) {
+			msg.setMsg("本校正安排由專人準備與您連繫..");
 			this.savMessage(msg);
 			return execute();
 		}
