@@ -93,7 +93,7 @@ function proceDyna(){
 				}
 				
 				//照片資訊				
-				document.getElementById("photo").innerHTML="<img src='http://cap.cust.edu.tw/CIS/Personnel/getFTPhoto4Empl?idno="+idno+"' width='100' border='1' />";				
+				document.getElementById("photo").innerHTML="<img src='http://ap.cust.edu.tw/CIS/Personnel/getFTPhoto4Empl?idno="+idno+"' width='100' border='1' />";				
 			}else{			
 				document.getElementById("cardValue").style.display="inline";	
 				document.getElementById("cname").innerHTML="無法識別的卡片資料";

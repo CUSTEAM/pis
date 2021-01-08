@@ -96,11 +96,23 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 
 
-							<div class="styled-input">
-								<input type="text" name="note" value="${note}">
+							<div class="styled-input" style="padding:15px;">
+								<!--input type="text" name="note" value="${note}"-->
+								<textarea  name="note" class="form-control">${note}</textarea>
 								<label>附註</label>
 								<span></span>
 							</div>
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
 							<div class="clear"> </div>
 							 <label class="checkbox"><i></i>填寫以上資料按下送出，將有專人與您連繫</label>
 						</div>
