@@ -87,7 +87,6 @@ public class DownloadYearsalyAction extends BaseAction{
 		String ydate=df.sqlGetStr("SELECT ydate FROM yearsaly ORDER BY ydate DESC");
 		List<Map>list=df.sqlGet("SELECT e.cname, e.acct_no, s.* FROM yearsaly s, yearempl e WHERE e.idno=s.idno AND s.ydate='"+ydate+"'ORDER BY sno");
 		
-		
 		out.println (" <Worksheet ss:Name='工作表1'>");
 		out.println ("  <Names>");
 		out.println ("   <NamedRange ss:Name='_FilterDatabase' ss:RefersTo='=工作表1!R1C1:R2C10'");
@@ -159,9 +158,9 @@ public class DownloadYearsalyAction extends BaseAction{
 				out.println ("      ss:Name='Print_Area'/></Cell>");
 				out.println ("    <Cell><Data ss:Type='String'>"+list.get(i+1).get("idno")+"</Data><NamedCell");
 				out.println ("      ss:Name='_FilterDatabase'/><NamedCell ss:Name='Print_Area'/></Cell>");
-				out.println ("    <Cell><Data ss:Type='Number'>"+list.get(i).get("acct_no")+"</Data><NamedCell");
+				out.println ("    <Cell><Data ss:Type='Number'>"+list.get(i+1).get("acct_no")+"</Data><NamedCell");
 				out.println ("      ss:Name='_FilterDatabase'/><NamedCell ss:Name='Print_Area'/></Cell>");
-				out.println ("    <Cell ss:StyleID='s79'><Data ss:Type='Number'>"+list.get(i).get("realpay")+"</Data><NamedCell");
+				out.println ("    <Cell ss:StyleID='s79'><Data ss:Type='Number'>"+list.get(i+1).get("realpay")+"</Data><NamedCell");
 				out.println ("      ss:Name='_FilterDatabase'/><NamedCell ss:Name='Print_Area'/></Cell>");
 				
 			}catch(Exception e) {
@@ -180,11 +179,33 @@ public class DownloadYearsalyAction extends BaseAction{
 			out.println ("   </Row>");
 		}		
 		
+		out.println ("   <Row>");
+		out.println ("    <Cell><Data ss:Type='String'></Data><NamedCell ss:Name='_FilterDatabase'/><NamedCell");
+		out.println ("      ss:Name='Print_Area'/></Cell>");
+		out.println ("    <Cell><Data ss:Type='String'>人數:</Data><NamedCell ss:Name='_FilterDatabase'/><NamedCell");
+		out.println ("      ss:Name='Print_Area'/></Cell>");
+		out.println ("    <Cell><Data ss:Type='String'>"+(list.size()+1)+"</Data><NamedCell");
+		out.println ("      ss:Name='_FilterDatabase'/><NamedCell ss:Name='Print_Area'/></Cell>");
+		out.println ("    <Cell><Data ss:Type='String'>轉帳金額:</Data><NamedCell");
+		out.println ("      ss:Name='_FilterDatabase'/><NamedCell ss:Name='Print_Area'/></Cell>");
+		out.println ("    <Cell ss:StyleID='s79'><Data ss:Type='String'>"+df.sqlGetStr("SELECT SUM(s.realpay) FROM yearsaly s WHERE s.ydate='"+ydate+"'")+"</Data><NamedCell");
+		out.println ("      ss:Name='_FilterDatabase'/><NamedCell ss:Name='Print_Area'/></Cell>");
+		out.println ("    <Cell><Data ss:Type='String'></Data><NamedCell ss:Name='_FilterDatabase'/><NamedCell");
+		out.println ("      ss:Name='Print_Area'/></Cell>");
+		out.println ("    <Cell><Data ss:Type='String'></Data><NamedCell ss:Name='_FilterDatabase'/><NamedCell");
+		out.println ("      ss:Name='Print_Area'/></Cell>");
+		out.println ("    <Cell><Data ss:Type='String'></Data><NamedCell");
+		out.println ("      ss:Name='_FilterDatabase'/><NamedCell ss:Name='Print_Area'/></Cell>");
+		out.println ("    <Cell><Data ss:Type='String'></Data><NamedCell");
+		out.println ("      ss:Name='_FilterDatabase'/><NamedCell ss:Name='Print_Area'/></Cell>");
+		out.println ("    <Cell ss:StyleID='s79'><Data ss:Type='String'></Data><NamedCell");
+		out.println ("      ss:Name='_FilterDatabase'/><NamedCell ss:Name='Print_Area'/></Cell>");
+		out.println ("   </Row>");
 		out.println ("  </Table>");
 		out.println ("  <WorksheetOptions xmlns='urn:schemas-microsoft-com:office:excel'>");
 		out.println ("   <PageSetup>");
 		out.println ("    <Header x:Margin='0.31496062992125984'");
-		out.println ("     x:Data='&amp;C&amp;&quot;標楷體,標準&quot;&amp;14中華科技大學公保年金轉帳清冊(年金日期：2019-03-15)&#10;&amp;R&amp;&quot;微軟正黑體,標準&quot;&amp;P/&amp;N'/>");
+		out.println ("     x:Data='&amp;C&amp;&quot;標楷體,標準&quot;&amp;14中華科技大學公保年金轉帳清冊(年金日期："+ydate+")&#10;&amp;R&amp;&quot;微軟正黑體,標準&quot;&amp;P/&amp;N'/>");
 		out.println ("    <Footer x:Margin='0.31496062992125984'/>");
 		out.println ("    <PageMargins x:Bottom='0.74803149606299213' x:Left='0.19685039370078741'");
 		out.println ("     x:Right='0.19685039370078741' x:Top='0.74803149606299213'/>");

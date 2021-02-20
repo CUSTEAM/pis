@@ -7,11 +7,11 @@
 			<result>jsp/punchClock/punchCard.jsp</result>
 		</action>
     	
-    	<!-- 退撫金報表 -->			
+    	<!-- 退撫金帳號報表 -->			
 		<action name="DownloadYearsaly" class="action.DownloadYearsalyAction">
 			<result name="success">null</result>
 		</action>
-    	
+		    	
     	<!-- 教育部下載資料審查 -->			
 		<action name="DownloadstmdPhp" class="action.DownloadstmdPhpAction">
 			<result name="success">null</result>
