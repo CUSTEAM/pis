@@ -11,6 +11,11 @@
 		<action name="DownloadYearsaly" class="action.DownloadYearsalyAction">
 			<result name="success">null</result>
 		</action>
+		
+		<!-- 導覽機成績單 -->			
+		<action name="ScoreHistPrint" class="print.score.ScoreHistPrint">
+			<result name="success">null</result>
+		</action>
 		    	
     	<!-- 教育部下載資料審查 -->			
 		<action name="DownloadstmdPhp" class="action.DownloadstmdPhpAction">

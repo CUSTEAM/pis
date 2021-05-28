@@ -56,29 +56,15 @@ public class putEnrollFtpFile extends BaseAction {
 	}
 
 	@Override
-	public String execute() throws IOException {
+	public String execute() throws IOException {	
 		
-		//Map result=new HashMap();
-    
 		String ext;
 		try{
 			ext=bio.getExtention(fileName);
 		}catch(Exception e){
 			ext="";
-		}
-		
-		//server tmp folder
+		}		
 		String fullpath=getContext().getRealPath("/tmp" )+"/";
-		//System.out.println(fullpath);
-		
-		//來自學生自行上傳
-		/*if(myStdNo!=null){	
-			imageFileName = myStdNo + extent;
-		}else{
-			myStdNo=bio.getFileName(fileName);
-			imageFileName = fileName;
-		}*/
-		
 		newFileName=new Date().getTime()+ext;
 		
         File file = new File(fullpath+newFileName);
