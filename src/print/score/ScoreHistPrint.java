@@ -23,8 +23,12 @@ public class ScoreHistPrint extends BasePrintXmlAction{
 		List stds;
 		//StringBuilder sb=new StringBuilder("SELECT (SELECT COUNT(DISTINCT school_year) FROM ScoreHist WHERE student_no=s.student_no)as year, s.student_no, c.ClassName, s.idno, s.student_name FROM Class c, stmd s WHERE s.depart_class=c.ClassNo AND c.CampusNo='"+cno+"'");
 		StringBuilder sb=new StringBuilder("SELECT c.graduate, c.SchNo, s.student_no, cs.name as SchoolName, cd.name as DeptName, s.idno, s.student_name FROM CODE_DEPT cd, CODE_SCHOOL cs, Class c, stmd s WHERE cs.id=c.SchoolNo AND c.DeptNo=cd.id AND s.depart_class=c.ClassNo AND s.idno='"+idno+"'AND birthday='"+bd+"'");
+		try {
+			stds=df.sqlGet(sb.toString());
+		}catch(Exception e){
+			return null;
+		}
 		
-		stds=df.sqlGet(sb.toString());
 		try{
 			sb=new StringBuilder("SELECT c.graduate, c.SchNo, s.student_no, cs.name as SchoolName, cd.name as DeptName, s.idno, s.student_name FROM CODE_DEPT cd, CODE_SCHOOL cs, Class c, Gstmd s WHERE cs.id=c.SchoolNo AND c.DeptNo=cd.id AND s.depart_class=c.ClassNo AND s.idno='"+idno+"'AND birthday='"+bd+"'");
 			stds.addAll(df.sqlGet(sb.toString()));
@@ -155,10 +159,18 @@ public class ScoreHistPrint extends BasePrintXmlAction{
 			}		
 			ScoreHistPrint p=new ScoreHistPrint();
 			p.print(response, stds);
+			return SUCCESS;
+		}else {
+			PrintWriter out=response.getWriter();		
+			
+			out.println ("verification failed ");
+			
+			out.close();
+			out.flush();
 			return null;
 		}
 		
-		return SUCCESS;
+		//return null;
 	}
 	
 	/**
