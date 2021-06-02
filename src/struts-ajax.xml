@@ -120,6 +120,16 @@
 		   	</result>
 		</action>
 		
+		
+		<!-- 取學生 -->
+		<action name="getStdList4Kiosk" class="ajax.getStdList4Kiosk">
+			<result type="json">
+			    <param name="list">list</param>
+			    <param name="callbackParameter">back</param>
+		   	</result>
+		</action>
+		
+		
 	</package>
 	
 

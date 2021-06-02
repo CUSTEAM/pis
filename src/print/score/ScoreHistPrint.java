@@ -16,13 +16,20 @@ import action.BasePrintXmlAction;
 
 
 
-
+/**
+ * 提供外部成績單
+ * http://john.cust.edu.tw/pis/ScoreHistPrint?stdno=91AD013&bd=67-07-08
+ * stdno=學號
+ * bd=出生日期yyy-mm-dd
+ * @author John
+ *
+ */
 public class ScoreHistPrint extends BasePrintXmlAction{
 	
-	private List<Map>getStd(String idno, String bd){
+	private List<Map>getStd(String stdno, String bd){
 		List stds;
 		//StringBuilder sb=new StringBuilder("SELECT (SELECT COUNT(DISTINCT school_year) FROM ScoreHist WHERE student_no=s.student_no)as year, s.student_no, c.ClassName, s.idno, s.student_name FROM Class c, stmd s WHERE s.depart_class=c.ClassNo AND c.CampusNo='"+cno+"'");
-		StringBuilder sb=new StringBuilder("SELECT c.graduate, c.SchNo, s.student_no, cs.name as SchoolName, cd.name as DeptName, s.idno, s.student_name FROM CODE_DEPT cd, CODE_SCHOOL cs, Class c, stmd s WHERE cs.id=c.SchoolNo AND c.DeptNo=cd.id AND s.depart_class=c.ClassNo AND s.idno='"+idno+"'AND birthday='"+bd+"'");
+		StringBuilder sb=new StringBuilder("SELECT c.graduate, c.SchNo, s.student_no, cs.name as SchoolName, cd.name as DeptName, s.idno, s.student_name FROM CODE_DEPT cd, CODE_SCHOOL cs, Class c, stmd s WHERE cs.id=c.SchoolNo AND c.DeptNo=cd.id AND s.depart_class=c.ClassNo AND s.student_no='"+stdno+"'AND birthday='"+bd+"'");
 		try {
 			stds=df.sqlGet(sb.toString());
 		}catch(Exception e){
@@ -30,7 +37,7 @@ public class ScoreHistPrint extends BasePrintXmlAction{
 		}
 		
 		try{
-			sb=new StringBuilder("SELECT c.graduate, c.SchNo, s.student_no, cs.name as SchoolName, cd.name as DeptName, s.idno, s.student_name FROM CODE_DEPT cd, CODE_SCHOOL cs, Class c, Gstmd s WHERE cs.id=c.SchoolNo AND c.DeptNo=cd.id AND s.depart_class=c.ClassNo AND s.idno='"+idno+"'AND birthday='"+bd+"'");
+			sb=new StringBuilder("SELECT c.graduate, c.SchNo, s.student_no, cs.name as SchoolName, cd.name as DeptName, s.idno, s.student_name FROM CODE_DEPT cd, CODE_SCHOOL cs, Class c, Gstmd s WHERE cs.id=c.SchoolNo AND c.DeptNo=cd.id AND s.depart_class=c.ClassNo AND s.student_no='"+stdno+"'AND birthday='"+bd+"'");
 			stds.addAll(df.sqlGet(sb.toString()));
 		}catch(Exception e) {}
 		return stds;
@@ -144,11 +151,11 @@ public class ScoreHistPrint extends BasePrintXmlAction{
 	
 	public String execute() throws IOException, ParseException{
 		
-		String idno=request.getParameter("id");
+		String stdno=request.getParameter("stdno");
 		String bd=request.getParameter("bd");
 		
 		bd=convertDate(bd);
-		List<Map>stds=getStd(idno, bd);
+		List<Map>stds=getStd(stdno, bd);
 		
 		//成績單外部單筆進入點
 		if(stds!=null){
