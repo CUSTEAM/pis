@@ -1,6 +1,7 @@
 package ajax;
  
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +35,27 @@ public class getStdList4Kiosk extends BaseAction{
 		String bd=request.getParameter("bd");		
 		bd=convertDate(bd);
 		
-		setList(df.sqlGet("SELECT student_no FROM Gstmd WHERE idno='"+idno+"' AND birthday='"+bd+"'"));		
+		List stds=new ArrayList();
+		
+		try {
+			stds=df.sqlGet("SELECT s.student_no, s.student_name, d.name as deptName, css.name as statName FROM "
+					+ "Gstmd s LEFT OUTER JOIN CODE_STMD_STATUS css ON css.id=s.occur_status, "
+					+ "Class c, CODE_DEPT d WHERE d.id=c.DeptNo AND c.ClassNo=s.depart_class AND "
+					+ "s.idno='"+idno+"'AND s.birthday='"+bd+"'");
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		try {
+			stds.addAll(df.sqlGet("SELECT s.student_no, s.student_name, d.name as deptName, css.name as statName FROM "
+					+ "stmd s LEFT OUTER JOIN CODE_STMD_STATUS css ON css.id=s.occur_status, "
+					+ "Class c, CODE_DEPT d WHERE d.id=c.DeptNo AND c.ClassNo=s.depart_class AND "
+					+ "s.idno='"+idno+"'AND s.birthday='"+bd+"'"));
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		setList(stds);		
 		
 		return SUCCESS;
 	}
