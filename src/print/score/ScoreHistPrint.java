@@ -151,8 +151,24 @@ public class ScoreHistPrint extends BasePrintXmlAction{
 	
 	public String execute() throws IOException, ParseException{
 		
-		String stdno=request.getParameter("stdno");
-		String bd=request.getParameter("bd");
+		String stdno="";
+		try {
+			try {
+				stdno=df.sqlGetStr("SELECT student_no FROM Gstmd WHERE idno='"+request.getParameter("stdno")+"'");
+			}catch(Exception e) {
+				stdno=df.sqlGetStr("SELECT student_no FROM stmd WHERE idno='"+request.getParameter("stdno")+"'");
+			}
+		}catch(Exception exe) {
+			try {
+				stdno=df.sqlGetStr("SELECT student_no FROM Gstmd WHERE student_no='"+request.getParameter("stdno")+"'");
+			}catch(Exception e) {
+				stdno=df.sqlGetStr("SELECT student_no FROM stmd WHERE student_no='"+request.getParameter("stdno")+"'");
+			}
+		}
+		
+		
+		response.sendRedirect("http://ap.cust.edu.tw/CIS/Course/StudentScoreHistory.do?no="+stdno);
+		/*String bd=request.getParameter("bd");
 		
 		bd=convertDate(bd);
 		List<Map>stds=getStd(stdno, bd);
@@ -166,7 +182,10 @@ public class ScoreHistPrint extends BasePrintXmlAction{
 			}		
 			ScoreHistPrint p=new ScoreHistPrint();
 			p.print(response, stds);
-			return SUCCESS;
+			//ap.cust.edu.tw/pis/ScoreHistPrint?stdno=A123456789&bd=88-08-08
+			response.sendRedirect(request.getContextPath() + "/CIS/Course/StudentScoreHistory.do?no="+st);
+			return null;
+			
 		}else {
 			PrintWriter out=response.getWriter();		
 			
@@ -175,9 +194,9 @@ public class ScoreHistPrint extends BasePrintXmlAction{
 			out.close();
 			out.flush();
 			return null;
-		}
+		}*/
 		
-		//return null;
+		return null;
 	}
 	
 	/**

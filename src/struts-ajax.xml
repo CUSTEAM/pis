@@ -24,6 +24,11 @@
 			<result type="json"/>
 		</action>
 		
+		<!-- 家長代表手機登入 -->
+		<action name="LoginOrRegister" class="ajax.EnrollSnato.LoginOrRegister">
+			<result type="json"/>
+		</action>
+		
 		<!-- ajax 上傳檔案 -->
 		<action name ="putEnrollFtpFile" class ="ajax.ftp.putEnrollFtpFile" > 
             <result type="json">
@@ -31,6 +36,15 @@
 			 	<param name="callbackParameter">back</param>
 			</result>
         </action > 
+        
+        <!-- ajax 上傳檔案 -->
+		<action name ="putEnrollSnatoFtpFile" class ="ajax.ftp.putEnrollSnatoFtpFile" > 
+            <result type="json">
+            	<param name="newFileName">newFileName</param>
+			 	<param name="callbackParameter">back</param>
+			</result>
+        </action > 
+        
         
 		
         

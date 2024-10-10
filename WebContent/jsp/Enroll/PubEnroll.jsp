@@ -134,7 +134,7 @@
 						<c:if test="${!empty std}">                        
                         <div class="row control-group has-float-label">
 						<div class="form-group col-xs-12 floating-label-form-group controls">
-						報考項目
+						<blockquote>報名項目</blockquote>
 	                    <select onChange="showSchooList(this.value)" id="enroll1" class="form-control form-select">
                         	<option value="">選擇報名部制與學制</option>
                         	<c:forEach items="${enrolls}" var="e">
@@ -196,17 +196,14 @@
 </div>
 </c:forEach>
 	
-	
 
-	
-	
 <c:forEach items="${enrolls}" var="e">                        
 <div id="s${e.CampusNo}${e.SchoolNo}">
 <c:forEach begin="1" end="${e.subsel}" varStatus="i">
 <div class="row control-group has-float-label">
 <div class="form-group col-xs-12 floating-label-form-group controls">
 <select onChange="chooSchool(${e.Oid}, 'ch${e.Oid}${i.index}', this.value)" class="form-control form-select">                        
-	<option>第${i.index}志願</option>
+	<option>請選擇第${i.index}志願</option>
 	<c:forEach items="${e.depts}" var="d"><option value="${d.Oid}">${d.dept_name}</option></c:forEach>                        
 </select>
 </div>
@@ -222,7 +219,7 @@
 <div class="row control-group has-float-label">
 <div class="form-group col-xs-12 floating-label-form-group controls">
 <select name="depts" id="ch${e.Oid}${i.index}" class="form-control form-select">                        
-	<option value="">第${i.index}志願</option>
+	<option value="">請選擇第${i.index}志願</option>
 	<c:forEach items="${e.depts}" var="d"><option value="${d.Oid}">${d.dept_name}</option></c:forEach>                        
 </select>
 </div>

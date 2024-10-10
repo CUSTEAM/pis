@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <div class="panel panel-primary">
-	<div class="panel-heading"><h3 class="panel-title">考生報名 - 或登入已報名的資料</h3></div>
+	<div class="panel-heading"><h3 class="panel-title">入學報名 - 或登入已報名的資料</h3></div>
 	<div class="panel-body">
     	<div class="form-group">
        		<label for="logidno">身分證明文件</label>

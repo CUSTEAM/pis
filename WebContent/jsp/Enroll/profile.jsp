@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <div class="row">                
-	                
+<blockquote>填寫基本資料</blockquote>	                
 <div class="col-sm-4">  
 <div class="row control-group has-float-label">
 	<div class="form-group col-xs-12 floating-label-form-group controls">

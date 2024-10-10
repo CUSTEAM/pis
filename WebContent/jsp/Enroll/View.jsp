@@ -106,7 +106,7 @@
 					<div class="col-sm-6">  
 						<div class="row control-group has-float-label">
 							<div class="form-group col-sm-12 floating-label-form-group controls">
-							報名考試項目
+							報名項目
 							<input readonly type="text" disabled value="${oStd.enroll.enroll_name}" class="form-control" />
 							<p class="help-block text-danger"></p>
 							</div>
@@ -170,7 +170,7 @@
 							<c:if test="${o_match}">							
 							<c:choose>         
 								<c:when test="${empty d.rank}">
-					            <input readonly type="text" disabled value="${d.CampusName}${d.SchoolName} - ${d.dept_name} 【未錄取】" class="form-control" />
+					            <input readonly type="text" disabled value="${d.CampusName}${d.SchoolName} - ${d.dept_name}" class="form-control" />
 					         	</c:when>					         
 					         	<c:when test="${d.rank==0}">						            
 					            <c:if test="${!empty d.checkin}">

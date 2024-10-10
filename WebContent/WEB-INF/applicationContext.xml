@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- beans 
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						classpath:/org/springframework/beans/factory/xml/spring-beans-3.2.xsd
+						http://www.springframework.org/schema/context
+						classpath:/org/springframework/beans/factory/xml/spring-context-3.2.xsd"-->
 <beans 
 	xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
@@ -22,7 +30,7 @@
                	<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
 			   	<prop key="hibernate.cache.provider_class">com.opensymphony.oscache.hibernate.OSCacheProvider</prop>
 			   	<prop key="hibernate.cache.use_query_cache">true</prop>
-			   	<prop key="hibernate.show_sql">true</prop>
+			   	<prop key="hibernate.show_sql">false</prop>
 	     	</props>
         </property>     
         <property name="mappingResources">
@@ -43,7 +51,8 @@
             	<value>model/Stmd.hbm.xml</value>
             	<value>model/Mail.hbm.xml</value>
             	<value>model/MailReceiver.hbm.xml</value>
-            	<value>model/MailAttache.hbm.xml</value>            	
+            	<value>model/MailAttache.hbm.xml</value>
+            	<value>model/Enroll_snato.hbm.xml</value>   
             </list>
         </property>
     </bean>

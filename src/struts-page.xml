@@ -33,6 +33,14 @@
 			<result name="view">jsp/Enroll/View.jsp</result>
 		</action>
 		
+		
+		<!-- 新南向招生-->			
+		<action name="SNatoEnroll" class="action.SNatoEnrollAction">
+			<result>jsp/Enroll_snato/PubEnroll.jsp</result>
+			<result name="view">jsp/Enroll_snato/View.jsp</result>
+		</action>
+		
+		
 		<!-- 新生2-->			
 		<action name="Counselor" class="action.CounselorAction">
 			<result>jsp/counselor/Counselor.jsp</result>
@@ -41,6 +49,7 @@
 		<!-- 課程 -->
 		<action name="PubCsSearch" class="action.PubCsSearchAction">
 			<result>jsp/PubCsSearch.jsp</result>
+			<!-- result name="redirect" type="redirect">${url}</result-->
 		</action>	
 		
 		<action name="SylDoc" class="print.dtime.SylDoc">

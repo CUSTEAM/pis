@@ -4,8 +4,7 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 	padding:0;
 	border:0;
 	font-size:100%;
-	font:inherit;
-	vertical-align:baseline;
+	
 }
 article, aside, details, figcaption, figure,footer, header, hgroup, menu, nav, section {
 	display: block;
@@ -165,9 +164,9 @@ p{
 .register-right h2 {
     text-transform: uppercase;
     font-size: 2em;
-    font-weight: 300;
+    font-weight: 500;
     letter-spacing: 1px;
-    word-spacing: 5px;
+    word-spacing: 10px;
     color: #fff;
 }
 .link a {

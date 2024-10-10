@@ -44,80 +44,26 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		</div>
 		<div class="register-right">
 			<div class="register-in">
-				<h2><span class="fa fa-pencil"></span> 填寫連絡資料</h2>
+				<h2>中華科技大學<br>入學意願調查表</h2>
 				<div class="register-form">
-					<form action="Counselor" method="post">
-						<div class="fields-grid">
-							<div class="styled-input agile-styled-input-top">
-								<input type="text" name="student_name" required="" value="${student_name}">
-								<label>連絡人姓名</label>
-								<span></span>
-							</div>
-
-							<div class="styled-input">
-								<input type="tel" name="cell_phone" required="" value="${cell_phone}">
-								<label>連絡電話</label>
-								<span></span>
-							</div>
-							
-							<c:forEach items="${Schools}" var="s">
-								<button type="button" name="btnn" class="btn" onClick="$('#SchoolNo').val('${s.schNo}'),getSchool(), setColor(), $(this).addClass('btn-danger');">${s.schName}</button>
-							</c:forEach>
-
-							<select name="SchoolNo" id="SchoolNo" style="display:none">
-									<c:forEach items="${Schools}" var="s">
-									<option <c:if test='${s.id eq  SchoolNo}'>selected</c:if> value="${s.schNo}">${s.schName}</option>
-									</c:forEach>
-								</select>
-							<!-- div class="styled-input agile-styled-input-top">
-								<select name="SchoolNo" id="SchoolNo" required="">
-									<c:forEach items="${Schools}" var="s">
-									<option <c:if test='${s.id eq  SchoolNo}'>selected</c:if> value="${s.schNo}">${s.schName}</option>
-									</c:forEach>
-								</select>
-								<span></span>
-							</div-->
-
-
-
-
-							<div class="styled-input agile-styled-input-top">
-								<select name="DeptNo" id="DeptNo" required="">
-									<option value="">請選擇系所*</option>
-
-									<option></option>
-
-								</select>
-								<span></span>
-							</div>
-
-
-
-
-
-
-							<div class="styled-input" style="padding:15px;">
-								<!--input type="text" name="note" value="${note}"-->
-								<textarea  name="note" class="form-control">${note}</textarea>
-								<label>附註</label>
-								<span></span>
-							</div>
-							
-							
-							
-							
-							
-							
-							
-							
-							
-							
-							
+					
+						<div class="fields-grid">							
 							<div class="clear"> </div>
-							 <label class="checkbox"><i></i>填寫以上資料按下送出，將有專人與您連繫</label>
+							 <label class="checkbox"><i></i>選擇要報名的項目填寫後, 將有專人與您連繫</label>
 						</div>
-						<input type="submit" name="method:confirm" value="送出">
-					</form>
+						<a target="_blank" href="https://forms.gle/svAsUNwzVkC7ZCyz7">
+						    <input type="submit" value="碩士班">
+						</a> 
+						
+						<a target="_blank" href="https://forms.gle/svAsUNwzVkC7ZCyz7">
+						    <input type="submit" value="四技．二技．二專">
+						</a> 
+						
+						<a target="_blank" href="https://forms.gle/UXp8zPu8BaRLwhGXA">
+						    <input type="submit" value="五專">
+						</a> 
+						
+					
 				</div>
 			</div>
 			<div class="clear"> </div>

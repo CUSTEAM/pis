@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+D<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
@@ -97,10 +97,9 @@ p {
 
 </style>
 <script>
-	window.console = window.console || function(t) {
+window.console = window.console || function(t) {
 	};
-</script>
-<script>
+
 if (document.location.search.match(/type=embed/gi)) {
 	window.parent.postMessage("resize", "*");
 }
@@ -156,70 +155,130 @@ if (document.location.search.match(/type=embed/gi)) {
 	
 	
 	
-	<input type="text" id="cardNo"/>
+	<input type="text" id="cardNo" style="width:1px;"/>
 	
 <script>
 
 var url="http://ap.cust.edu.tw/CIS/CardReaderSimple";
 
-var cname,day,info;
+var cname,day,info, idno, html, time;
 
 $("#cardNo").keydown(function (event) {
     if (event.which == 13) {
     	
+    	if($("#cardNo").val().length>=10)
     	 $.ajax({
     		 	
     			
     		    url:"http://ap.cust.edu.tw/CIS/CardReaderSimple",
     		    type:"GET",
     		    dataType: "xml",//資料型態可以不設定，且此型態不可是text或html
-    		    data: { CardNo:"E122713583", day:"2019-7-15", time:"12:00.00" },
+    		    data: { 
+    		    	CardNo:$("#cardNo").val(), 
+    		    	day:clock.date, 
+    		    	time:clock.time
+    		    },
     		    timeout: 1000,
     		    error: function(xml){
-    		        alert("讀取xml錯誤"+xml); //當xml讀取失敗
+    		    	$.notify({		
+    		    		//icon: "http://ap.cust.edu.tw/CIS/Personnel/getFTPhoto4Empl?idno=1234567",
+    		    		title: "訊息",
+    		    		message: "遠端服務發生問題",
+    		    		
+    		    	},{
+    		    		allow_dismiss: false,
+    		    		type: 'success',
+    		    		progress:25,
+    		    		showProgressbar: true,
+    		    	type: 'minimalist',
+    		    	delay: 100,
+    		    	icon_type: 'image',
+    		    	
+    		    	
+    		    });
     		    },
     		    success: function(xml){
     		      $(xml).find("pront").each(function(i){  
 
-    		        
+    		        idno=$(this).children("idno").text(); //取得子節點中的src資料
     		        cname=$(this).children("cname").text(); //取得子節點中的src資料
     		        day=$(this).children("day").text(); //取得子節點中的url資料
     		        info=$(this).children("info").text(); //取得子節點中的url資料
+    		        times=$(this).children("time"); //取得子節點中的url資料
+    		       
     		        
-    		        //alert(cname+"|"+day+"|"+info); //秀出總筆數與xml檔與抓到的欄位
+    		        
+    		        html="<div data-notify='container' class='col-xs-11 col-sm-4 alert alert-warning' role='alert'>";
+    		        html+="<table><tr><td><img src='http://ap.cust.edu.tw/CIS/Personnel/getFTPhoto4Empl?idno="+idno+"'/></td>";
+    		        html+="<td valign='top'>";
+    		        html+=cname+info+times[0];
+    		        html+="</td>";
+    		        html+="</tr>";
+    		        /*for(i=0; i<times.length; i++){
+    		        	html+=times[i].text();
+    		        }*/
+    		        
+    		        
+    		        $.notify({    		    		    		    		
+    		    		//icon: "http://ap.cust.edu.tw/CIS/Personnel/getFTPhoto4Empl?idno="+idno,
+    		    		//title: cname,
+    		    		//message: cname+"",
+    		    		
+    	    		},{
+    	    			
+    	    			allow_dismiss: true,
+    	    			//type: 'success',
+    	    			progress:25,
+    	    			showProgressbar: true,
+	    	    		type: 'minimalist',
+	    	    		delay: 100,
+	    	    		icon_type: 'image',
+    	    			
+	    	    		template:html   	    			
+    	    		
+    	    	});
+    		    ///
 
-    		      })
-    		    }
+    		   })
+    		 }
     	 });
-    	
-    	$.notify({
-	    		
-    		
-	    		icon: 'https://randomuser.me/api/portraits/med/men/77.jpg',
-	    		//title: cname,
-	    		message: cardNo+' connect.',
-	    		
-    		},{
-    			allow_dismiss: false,
-    			type: 'success',
-    			progress:25,
-    			showProgressbar: true,
-    		type: 'minimalist',
-    		delay: 100,
-    		icon_type: 'image',
-    		/*template: '<div data-notify="container" class="col-xs-11 col-sm-3 alert alert-danger" role="alert">' +
-    			'<img data-notify="icon" class="img-circle pull-left">' +
-    			'<span data-notify="title">'+cname+'</span>' +
-    			'<span data-notify="message">'+day+'</span>' +
-    		'</div>'*/
-    		
-    	});
+    	 
+    
     	
     	
+    $("#cardNo").val("");
     }
 }); 
 
 
+
+
+
+$(function(){
+	$.notify({		
+		//icon: "http://ap.cust.edu.tw/CIS/Personnel/getFTPhoto4Empl?idno=1234567",
+		title: "訊息",
+		message: "程式啟動",
+		
+	},{
+		allow_dismiss: false,
+		type: 'success',
+		progress:25,
+		showProgressbar: true,
+	type: 'minimalist',
+	delay: 100,
+	icon_type: 'image',
+	
+	
+});
+	
+	function show(){
+		$('#cardNo').focus();
+	}
+	
+	setInterval(show,100);// 注意函式名沒有引號和括弧！
+	
+});
 
 
 </script>

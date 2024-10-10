@@ -20,6 +20,7 @@
        <pattern>/inc/*</pattern>
        <pattern>/StdProfileEdit</pattern>
        <pattern>/PubEnroll</pattern>
+       <pattern>/SNatoEnroll</pattern>       
        <pattern>/html/PunchClock/*</pattern>
 	</excludes>
 </decorators>
